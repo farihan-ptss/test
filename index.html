@@ -92,7 +92,7 @@
                     <i class="fa-solid fa-diagram-project"></i> Pembina Litar
                 </button>
                 <button onclick="switchTab('exercises')" id="tab-exercises" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
-                    <i class="fa-solid fa-pen-to-square"></i> 5 Modul Latihan
+                    <i class="fa-solid fa-pen-to-square"></i> Modul Latihan
                 </button>
                 <button onclick="switchTab('sheets')" id="tab-sheets" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
                     <i class="fa-solid fa-file-excel text-emerald-400"></i> Integrasi Google Sheet
@@ -163,48 +163,25 @@
             </div>
         </section>
 
-        <!-- TAB 3: 5 MODUL LATIHAN -->
+        <!-- TAB 3: MODUL LATIHAN -->
         <section id="section-exercises" class="hidden space-y-6">
-            <!-- Exercise Selection Header -->
-            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
-                <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-amber-400"></i> Modul Latihan & Penilaian
-                </h2>
-                <p class="text-slate-300 text-sm mb-4">
-                    Selesaikan 5 modul latihan di bawah. Markah anda akan disimpan secara automatik dan boleh dihantar terus ke Google Sheet guru/pensyarah anda!
-                </p>
-
-                <!-- Navigation between Exercises -->
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                    <button onclick="selectExercise(1)" id="exBtn-1" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 1</span>
-                        <span class="text-xs font-semibold text-slate-200 block truncate">Operasi Asas</span>
-                        <span id="badge-ex-1" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
-                    </button>
-                    <button onclick="selectExercise(2)" id="exBtn-2" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 2</span>
-                        <span class="text-xs font-semibold text-slate-200 block truncate">Ungkapan Logik</span>
-                        <span id="badge-ex-2" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
-                    </button>
-                    <button onclick="selectExercise(3)" id="exBtn-3" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 3</span>
-                        <span class="text-xs font-semibold text-slate-200 block truncate">Analisis Litar</span>
-                        <span id="badge-ex-3" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
-                    </button>
-                    <button onclick="selectExercise(4)" id="exBtn-4" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 4</span>
-                        <span class="text-xs font-semibold text-slate-200 block truncate">Hukum Boolean</span>
-                        <span id="badge-ex-4" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
-                    </button>
-                    <button onclick="selectExercise(5)" id="exBtn-5" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative col-span-2 sm:col-span-1">
-                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 5</span>
-                        <span class="text-xs font-semibold text-slate-200 block truncate">Cabaran Aplikasi</span>
-                        <span id="badge-ex-5" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
-                    </button>
+            <!-- Exercise Header -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-amber-400"></i> Modul Latihan Logik Boolean
+                    </h2>
+                    <p class="text-slate-300 text-sm">
+                        Jawab soalan di bawah. Markah anda akan disimpan secara automatik dan boleh dihantar terus ke Google Sheet!
+                    </p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl flex items-center gap-3">
+                    <span class="text-xs text-slate-400 font-medium">Markah Latihan:</span>
+                    <span id="badge-ex-1" class="text-base font-bold text-amber-400 font-mono">0 / 10</span>
                 </div>
             </div>
 
-            <!-- Active Exercise Question Container -->
+            <!-- Question Container -->
             <div id="exerciseContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
                 <!-- Question content rendered dynamically -->
             </div>
@@ -218,35 +195,25 @@
                         <i class="fa-solid fa-file-excel text-emerald-400"></i> Penghantaran Data & Markah ke Google Sheet
                     </h2>
                     <p class="text-slate-300 text-sm">
-                        Anda boleh menghantar rekod pencapaian latihan anda terus ke Google Sheet.
+                        Anda boleh menghantar rekod pencapaian latihan anda terus ke Google Sheet guru/pensyarah.
                     </p>
                 </div>
 
                 <!-- Score Summary Cards -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 1</span>
-                        <span id="summary-score-1" class="text-lg font-bold text-sky-400">0/5</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase block font-semibold">Markah Latihan (Soalan 1-10)</span>
+                            <span id="summary-score-1" class="text-xl font-bold text-sky-400">0/10</span>
+                        </div>
+                        <i class="fa-solid fa-pen-to-square text-slate-600 text-2xl"></i>
                     </div>
-                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 2</span>
-                        <span id="summary-score-2" class="text-lg font-bold text-sky-400">0/5</span>
-                    </div>
-                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 3</span>
-                        <span id="summary-score-3" class="text-lg font-bold text-sky-400">0/5</span>
-                    </div>
-                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 4</span>
-                        <span id="summary-score-4" class="text-lg font-bold text-sky-400">0/5</span>
-                    </div>
-                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 5</span>
-                        <span id="summary-score-5" class="text-lg font-bold text-sky-400">0/5</span>
-                    </div>
-                    <div class="bg-gradient-to-br from-indigo-900/50 to-sky-900/50 p-3 rounded-xl border border-indigo-700/50">
-                        <span class="text-[10px] text-indigo-300 uppercase block font-semibold">Jumlah Markah</span>
-                        <span id="summary-total" class="text-lg font-bold text-amber-400">0%</span>
+                    <div class="bg-gradient-to-br from-indigo-900/50 to-sky-900/50 p-4 rounded-xl border border-indigo-700/50 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-indigo-300 uppercase block font-semibold">Jumlah Markah Keseluruhan</span>
+                            <span id="summary-total" class="text-2xl font-bold text-amber-400">0%</span>
+                        </div>
+                        <i class="fa-solid fa-trophy text-amber-400 text-2xl"></i>
                     </div>
                 </div>
 
@@ -291,17 +258,13 @@ function doPost(e) {
     
     // Tambah header jika helai masih kosong
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Masa Hantar", "Nama Pelajar", "Latihan 1", "Latihan 2", "Latihan 3", "Latihan 4", "Latihan 5", "Jumlah Markah (%)"]);
+      sheet.appendRow(["Masa Hantar", "Nama Pelajar", "Markah Latihan", "Peratusan (%)"]);
     }
     
     sheet.appendRow([
       new Date(),
       data.nama,
-      data.latihan1 + "/5",
-      data.latihan2 + "/5",
-      data.latihan3 + "/5",
-      data.latihan4 + "/5",
-      data.latihan5 + "/5",
+      data.latihan + "/10",
       data.jumlahMarkah + "%"
     ]);
     
@@ -372,8 +335,8 @@ function doPost(e) {
         // Application State
         window.userData = {
             nama: "Pelajar Baru",
-            scores: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-            answers: { 1: {}, 2: {}, 3: {}, 4: {}, 5: {} }
+            scores: { 1: 0 },
+            answers: { 1: {} }
         };
 
         try {
@@ -744,8 +707,8 @@ function doPost(e) {
 
         const EXERCISES_DATA = {
             1: {
-                title: 'Latihan 1: Asas Gerbang Logik & Jadual Kebenaran',
-                desc: 'Uji kefahaman asas operasi AND, OR, NOT, NAND, NOR, dan XOR.',
+                title: 'Latihan Logik Boolean (10 Soalan)',
+                desc: 'Uji kefahaman menyeluruh merangkumi gerbang logik, jadual kebenaran, ungkapan Boolean, dan teorem algebra.',
                 questions: [
                     {
                         q: '1. Apakah keluaran gerbang AND jika input A = 1 dan input B = 0?',
@@ -772,154 +735,40 @@ function doPost(e) {
                         exp: 'Operasi OR diwakili oleh simbol penambahan (+).'
                     },
                     {
-                        q: '5. Sekiranya input A = 1 dan B = 1, manakah antara berikut menghasilkan keluaran 0?',
-                        options: ['OR', 'AND', 'NAND', 'XOR (sahaja)'],
-                        correct: 2,
-                        exp: 'NAND(1,1) = NOT(1 AND 1) = NOT(1) = 0.'
-                    }
-                ]
-            },
-            2: {
-                title: 'Latihan 2: Penilaian Ungkapan Boolean',
-                desc: 'Kira nilai keluaran Y berdasarkan nilai masukan yang diberikan.',
-                questions: [
-                    {
-                        q: '1. Diberi Y = A . B + C. Jika A = 1, B = 0, C = 1, apakah nilai Y?',
+                        q: '5. Diberi Y = A . B + C. Jika A = 1, B = 0, C = 1, apakah nilai Y?',
                         options: ['0', '1'],
                         correct: 1,
                         exp: 'A.B = 1.0 = 0. Kemudian Y = 0 + C = 0 + 1 = 1.'
                     },
                     {
-                        q: '2. Diberi Y = (A + B)\'. Jika A = 0 dan B = 0, apakah nilai Y?',
+                        q: '6. Diberi Y = (A + B)\'. Jika A = 0 dan B = 0, apakah nilai Y?',
                         options: ['0', '1'],
                         correct: 1,
                         exp: 'A + B = 0 + 0 = 0. Pelengkap (0)\' = 1.'
                     },
                     {
-                        q: '3. Diberi Y = A\' . B. Jika A = 0 dan B = 1, apakah nilai Y?',
-                        options: ['0', '1'],
-                        correct: 1,
-                        exp: 'A\' = NOT(0) = 1. Maka Y = 1 . 1 = 1.'
-                    },
-                    {
-                        q: '4. Diberi Y = A ⊕ B. Jika A = 1 dan B = 1, apakah nilai Y?',
-                        options: ['0', '1'],
-                        correct: 0,
-                        exp: 'XOR menghasilkan 0 sekiranya kedua-dua masukan adalah SAMA.'
-                    },
-                    {
-                        q: '5. Diberi Y = (A . B . C)\'. Jika A=1, B=1, C=1, apakah nilai Y?',
-                        options: ['0', '1'],
-                        correct: 0,
-                        exp: 'A.B.C = 1. Maka pelengkap (1)\' = 0.'
-                    }
-                ]
-            },
-            3: {
-                title: 'Latihan 3: Analisis Litar Logik',
-                desc: 'Menganalisis sambungan litar untuk menentukan ungkapan Boolean.',
-                questions: [
-                    {
-                        q: '1. Litar mengandungi gerbang AND diikuti oleh gerbang NOT. Apakah nama tunggal bagi gabungan gerbang ini?',
-                        options: ['NOR', 'NAND', 'XOR', 'XNOR'],
-                        correct: 1,
-                        exp: 'NAND bermaksud NOT-AND.'
-                    },
-                    {
-                        q: '2. Apakah ungkapan logik bagi litar di mana A dan B disambung ke gerbang OR, dan hasilnya disambung ke gerbang AND bersama input C?',
-                        options: ['Y = (A + B) . C', 'Y = (A . B) + C', 'Y = A + B + C', 'Y = A . B . C'],
-                        correct: 0,
-                        exp: 'Keluaran OR ialah (A + B), kemudian di-AND bersama C menjadi (A + B) . C.'
-                    },
-                    {
-                        q: '3. Berapakah baris kombinasi input dalam jadual kebenaran untuk litar dengan 3 input (A, B, C)?',
-                        options: ['4', '6', '8', '16'],
-                        correct: 2,
-                        exp: 'Bilangan kombinasi = 2^n = 2^3 = 8 baris.'
-                    },
-                    {
-                        q: '4. Dalam litar Penambah Separuh (Half Adder), gerbang manakah yang menentukan nilai "Hasil Tambah" (Sum)?',
-                        options: ['AND', 'OR', 'XOR', 'NAND'],
-                        correct: 2,
-                        exp: 'Keluaran Sum dijanakan oleh gerbang XOR (A ⊕ B).'
-                    },
-                    {
-                        q: '5. Jika dua gerbang NOT disambung secara bersiri (Inverter ganda dua), apakah hasil keluaran Y untuk input A?',
-                        options: ['Y = A\'', 'Y = A', 'Y = 0', 'Y = 1'],
-                        correct: 1,
-                        exp: 'Penterbalikan dua kali memulangkan nilai asal: (A\')\' = A.'
-                    }
-                ]
-            },
-            4: {
-                title: 'Latihan 4: Hukum & Teorem Boolean',
-                desc: 'Permudahan ungkapan mengikut hukum algebra Boolean (De Morgan, Idempotent, dll).',
-                questions: [
-                    {
-                        q: '1. Mengikut Hukum De Morgan, (A . B)\' adalah bersamaan dengan:',
+                        q: '7. Mengikut Hukum De Morgan, ungkapan (A . B)\' adalah bersamaan dengan:',
                         options: ['A\' . B\'', 'A\' + B\'', 'A + B', 'A . B'],
                         correct: 1,
-                        exp: 'Hukum De Morgan Pertama: (A . B)\' = A\' + B\'.'
+                        exp: 'Hukum De Morgan Pertama menyatakan (A . B)\' = A\' + B\'.'
                     },
                     {
-                        q: '2. Permudahkan ungkapan Boolean: A + 0 = ?',
+                        q: '8. Permudahkan ungkapan Boolean berikut: A + 0 = ?',
                         options: ['0', '1', 'A', 'A\''],
                         correct: 2,
                         exp: 'Hukum Identiti: Sebarang pembolehubah di-OR bersama 0 mengekalkan nilainya (A).'
                     },
                     {
-                        q: '3. Permudahkan ungkapan Boolean: A . A\' = ?',
-                        options: ['0', '1', 'A', '2A'],
-                        correct: 0,
-                        exp: 'Hukum Pelengkap: Salah satu bernilai 0, maka pendaraban AND sentiasa bernilai 0.'
-                    },
-                    {
-                        q: '4. Permudahkan ungkapan Boolean: A + A . B = ?',
-                        options: ['B', 'A . B', 'A', '1'],
-                        correct: 2,
-                        exp: 'Hukum Penyerapan (Absorption Law): A + AB = A(1 + B) = A(1) = A.'
-                    },
-                    {
-                        q: '5. Mengikut Hukum Kalis Agihan (Distributive Law), A . (B + C) = ?',
-                        options: ['(A . B) + (A . C)', '(A + B) . (A + C)', 'A . B . C', 'A + B + C'],
-                        correct: 0,
-                        exp: 'A . (B + C) = A.B + A.C.'
-                    }
-                ]
-            },
-            5: {
-                title: 'Latihan 5: Cabaran Aplikasi & Litar Dunia Nyata',
-                desc: 'Aplikasi logik Boolean dalam sistem komputer dan kawalan keselamatan automatik.',
-                questions: [
-                    {
-                        q: '1. Sebuah penggera rumah berbunyi (Y=1) jika Suis Keselamatan dihidupkan (S=1) DAN Pengesan Gerakan mengesan penceroboh (M=1). Ungkapan Boolean bagi litar ini ialah:',
+                        q: '9. Sebuah penggera rumah berbunyi (Y=1) jika Suis Keselamatan dihidupkan (S=1) DAN Pengesan Gerakan mengesan penceroboh (M=1). Ungkapan Boolean bagi litar ini ialah:',
                         options: ['Y = S + M', 'Y = S . M', 'Y = (S . M)\'', 'Y = S ⊕ M'],
                         correct: 1,
                         exp: 'Syarat "DAN" memerlukan gerbang AND: Y = S . M.'
                     },
                     {
-                        q: '2. Sistem keselamatan kereta membenarkan enjin dihidupkan jika Kunci dimasukkan (K=1) DAN (Brek ditekan (B=1) OR Punang Mula ditekan (P=1)). Ungkapan logiknya ialah:',
-                        options: ['Y = K . B . P', 'Y = K + B + P', 'Y = K . (B + P)', 'Y = (K + B) . P'],
-                        correct: 2,
-                        exp: 'Kunci di-AND bersama gabungan OR brek/butang: K . (B + P).'
-                    },
-                    {
-                        q: '3. Gerbang universiti yang boleh membina SEBARANG operasi gerbang logik lain dikenali sebagai:',
-                        options: ['AND & OR', 'NAND & NOR', 'XOR & XNOR', 'NOT & AND'],
+                        q: '10. Gerbang manakah yang dikenali sebagai Universal Gate kerana boleh membina sebarang litar logik lain?',
+                        options: ['AND dan OR', 'NAND dan NOR', 'XOR dan XNOR', 'NOT dan AND'],
                         correct: 1,
-                        exp: 'NAND dan NOR dikenali sebagai Universal Gates kerana boleh membina mana-mana litar logik.'
-                    },
-                    {
-                        q: '4. Dalam sistem pemproses komputer (ALU), komparator dua bit menyemak sama ada bit A dan bit B adalah SAMA. Gerbang manakah yang menghasilkan 1 apabila A dan B SAMA?',
-                        options: ['XOR', 'XNOR', 'OR', 'NAND'],
-                        correct: 1,
-                        exp: 'XNOR (Exclusive-NOR) menghasilkan 1 HANYA jika kedua-dua input berkeadaan sama (0,0 atau 1,1).'
-                    },
-                    {
-                        q: '5. Apakah fungsi litar Penambah Penuh (Full Adder) berbanding Penambah Separuh (Half Adder)?',
-                        options: ['Boleh menambah 3 bit termasuk Carry In', 'Hanya boleh menambah bit negatif', 'Lebih lambat dari Half Adder', 'Menggunakan hanya 1 gerbang'],
-                        correct: 0,
-                        exp: 'Full Adder mengambil kira 3 masukan: Input A, Input B, dan Carry-In (Cin) daripada bit sebelumnya.'
+                        exp: 'NAND dan NOR dikenali sebagai Universal Gates.'
                     }
                 ]
             }
@@ -928,22 +777,14 @@ function doPost(e) {
         let currentActiveEx = 1;
 
         function selectExercise(exId) {
-            currentActiveEx = exId;
-
-            // Highlight active navigation button
-            document.querySelectorAll('.ex-nav-btn').forEach(btn => {
-                btn.classList.remove('border-sky-500', 'ring-2', 'ring-sky-500/50');
-            });
-            const activeBtn = document.getElementById(`exBtn-${exId}`);
-            if (activeBtn) activeBtn.classList.add('border-sky-500', 'ring-2', 'ring-sky-500/50');
-
-            renderExerciseContent(exId);
+            currentActiveEx = 1;
+            renderExerciseContent(1);
         }
 
         function renderExerciseContent(exId) {
-            const data = EXERCISES_DATA[exId];
+            const data = EXERCISES_DATA[1];
             const container = document.getElementById('exerciseContainer');
-            const userAns = window.userData.answers[exId] || {};
+            const userAns = window.userData.answers[1] || {};
 
             let questionsHtml = data.questions.map((q, qIdx) => {
                 const selected = userAns[qIdx];
@@ -961,7 +802,7 @@ function doPost(e) {
                     }
 
                     return `
-                        <button onclick="answerQuestion(${exId}, ${qIdx}, ${optIdx})" 
+                        <button onclick="answerQuestion(1, ${qIdx}, ${optIdx})" 
                             ${isAnswered ? 'disabled' : ''}
                             class="w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition flex items-center justify-between ${optStyle}">
                             <span>${String.fromCharCode(65 + optIdx)}. ${opt}</span>
@@ -986,7 +827,7 @@ function doPost(e) {
                 `;
             }).join('');
 
-            const score = window.userData.scores[exId] || 0;
+            const score = window.userData.scores[1] || 0;
 
             container.innerHTML = `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4 mb-6">
@@ -995,8 +836,8 @@ function doPost(e) {
                         <p class="text-xs text-slate-400">${data.desc}</p>
                     </div>
                     <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl flex items-center gap-3">
-                        <span class="text-xs text-slate-400 font-medium">Markah Anda:</span>
-                        <span class="text-base font-bold text-amber-400 font-mono">${score} / 5</span>
+                        <span class="text-xs text-slate-400 font-medium">Markah:</span>
+                        <span class="text-base font-bold text-amber-400 font-mono">${score} / 10</span>
                     </div>
                 </div>
 
@@ -1005,85 +846,63 @@ function doPost(e) {
                 </div>
 
                 <div class="mt-8 pt-4 border-t border-slate-800 flex justify-between items-center">
-                    <button onclick="resetExercise(${exId})" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate-left"></i> Selesaikan Semula Latihan Ini
+                    <button onclick="resetExercise(1)" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i> Jawab Semula Latihan Ini
                     </button>
-                    ${exId < 5 ? `
-                        <button onclick="selectExercise(${exId + 1})" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition flex items-center gap-2">
-                            <span>Seterusnya: Latihan ${exId + 1}</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    ` : `
-                        <button onclick="switchTab('sheets')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-2">
-                            <span>Hantar Markah ke Google Sheet</span>
-                            <i class="fa-solid fa-file-excel"></i>
-                        </button>
-                    `}
+                    <button onclick="switchTab('sheets')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-2">
+                        <span>Hantar Markah ke Google Sheet</span>
+                        <i class="fa-solid fa-file-excel"></i>
+                    </button>
                 </div>
             `;
         }
 
         function answerQuestion(exId, qIdx, optIdx) {
-            if (!window.userData.answers[exId]) window.userData.answers[exId] = {};
-            window.userData.answers[exId][qIdx] = optIdx;
+            if (!window.userData.answers[1]) window.userData.answers[1] = {};
+            window.userData.answers[1][qIdx] = optIdx;
 
-            // Recalculate score for this exercise
-            const exData = EXERCISES_DATA[exId];
+            // Recalculate score
+            const exData = EXERCISES_DATA[1];
             let currentScore = 0;
-            Object.keys(window.userData.answers[exId]).forEach(index => {
-                if (window.userData.answers[exId][index] === exData.questions[index].correct) {
+            Object.keys(window.userData.answers[1]).forEach(index => {
+                if (window.userData.answers[1][index] === exData.questions[index].correct) {
                     currentScore++;
                 }
             });
 
-            window.userData.scores[exId] = currentScore;
+            window.userData.scores[1] = currentScore;
 
             // Save state
             if (window.saveUserDataToCloud) window.saveUserDataToCloud();
 
             updateUIHeader();
             updateExerciseBadges();
-            renderExerciseContent(exId);
+            renderExerciseContent(1);
         }
 
         function resetExercise(exId) {
-            window.userData.answers[exId] = {};
-            window.userData.scores[exId] = 0;
+            window.userData.answers[1] = {};
+            window.userData.scores[1] = 0;
             if (window.saveUserDataToCloud) window.saveUserDataToCloud();
             updateUIHeader();
             updateExerciseBadges();
-            renderExerciseContent(exId);
+            renderExerciseContent(1);
         }
 
         function updateExerciseBadges() {
-            for (let i = 1; i <= 5; i++) {
-                const score = window.userData.scores[i] || 0;
-                const badge = document.getElementById(`badge-ex-${i}`);
-                if (badge) {
-                    badge.textContent = `${score}/5`;
-                    if (score === 5) {
-                        badge.className = "mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 inline-block";
-                    } else if (score > 0) {
-                        badge.className = "mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-400 border border-sky-500/30 inline-block";
-                    } else {
-                        badge.className = "mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block";
-                    }
-                }
+            const score = window.userData.scores[1] || 0;
+            const badge = document.getElementById('badge-ex-1');
+            if (badge) badge.textContent = `${score} / 10`;
 
-                const summaryScore = document.getElementById(`summary-score-${i}`);
-                if (summaryScore) summaryScore.textContent = `${score}/5`;
-            }
+            const summaryScore = document.getElementById('summary-score-1');
+            if (summaryScore) summaryScore.textContent = `${score}/10`;
         }
 
         function updateUIHeader() {
             document.getElementById('headerUserName').textContent = window.userData.nama || "Pelajar Baru";
 
-            // Calculate total overall score percentage
-            let totalMarks = 0;
-            for (let i = 1; i <= 5; i++) {
-                totalMarks += (window.userData.scores[i] || 0);
-            }
-            const overallPercentage = Math.round((totalMarks / 25) * 100);
+            const score = window.userData.scores[1] || 0;
+            const overallPercentage = Math.round((score / 10) * 100);
 
             document.getElementById('headerTotalScore').textContent = `${overallPercentage}%`;
             document.getElementById('summary-total').textContent = `${overallPercentage}%`;
@@ -1114,7 +933,7 @@ function doPost(e) {
             document.getElementById(`tab-${tabId}`).classList.add('active');
 
             if (tabId === 'exercises') {
-                selectExercise(currentActiveEx);
+                renderExerciseContent(1);
             }
         }
 
@@ -1123,97 +942,50 @@ function doPost(e) {
             guide.classList.toggle('hidden');
         }
 
-   async function submitToGoogleSheet() {
+        async function submitToGoogleSheet() {
+            const webhookUrl = document.getElementById('webhookUrlInput').value.trim();
+            const btn = document.getElementById('btnSubmitSheet');
+            const msgBox = document.getElementById('submitStatusMsg');
 
-    const webhookUrl =
-        document.getElementById('webhookUrlInput').value.trim();
+            const score = window.userData.scores[1] || 0;
+            const overallPercentage = Math.round((score / 10) * 100);
 
-    const btn =
-        document.getElementById('btnSubmitSheet');
+            const payload = {
+                nama: window.userData.nama,
+                latihan: score,
+                jumlahMarkah: overallPercentage
+            };
 
-    const msgBox =
-        document.getElementById('submitStatusMsg');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...`;
 
-    // Kira jumlah markah
-    let totalMarks = 0;
+            if (webhookUrl) {
+                try {
+                    await fetch(webhookUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
 
-    for (let i = 1; i <= 5; i++) {
-        totalMarks += (window.userData.scores[i] || 0);
-    }
+                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+                    msgBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> Data markah ${window.userData.nama} berjaya dihantar ke Google Sheet!`;
+                } catch (err) {
+                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
+                    msgBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Ralat menghantar data: ${err.message}`;
+                }
+            } else {
+                setTimeout(() => {
+                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-sky-950 border border-sky-800 text-sky-300 block";
+                    msgBox.innerHTML = `<i class="fa-solid fa-circle-info"></i> <strong>[MOD SIMULASI]</strong> Markah ${window.userData.nama} (${score}/10 = ${overallPercentage}%) disimulasikan berjaya dihantar! Sila isi URL Webhook untuk penyertaan terus ke borang Google Sheet sebenar.`;
+                }, 800);
+            }
 
-    const overallPercentage =
-        Math.round((totalMarks / 25) * 100);
-
-    // Hanya hantar NAMA dan SKOR
-    const payload = {
-        nama: window.userData.nama,
-        skor: overallPercentage
-    };
-
-    // Semak URL
-    if (!webhookUrl) {
-
-        msgBox.className =
-            "p-3 rounded-xl text-xs font-medium bg-amber-950 border border-amber-800 text-amber-300 block";
-
-        msgBox.innerHTML =
-            '<i class="fa-solid fa-triangle-exclamation"></i> ' +
-            'Sila masukkan URL Web App Google Apps Script.';
-
-        return;
-    }
-
-    btn.disabled = true;
-
-    btn.innerHTML =
-        '<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...';
-
-    try {
-
-        await fetch(webhookUrl, {
-
-            method: 'POST',
-
-            mode: 'no-cors',
-
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-
-            body: JSON.stringify(payload)
-
-        });
-
-        msgBox.className =
-            "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
-
-        msgBox.innerHTML =
-            '<i class="fa-solid fa-circle-check"></i> ' +
-            'Markah berjaya dihantar ke Google Sheet!';
-
-    } catch (err) {
-
-        console.error(err);
-
-        msgBox.className =
-            "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
-
-        msgBox.innerHTML =
-            '<i class="fa-solid fa-triangle-exclamation"></i> ' +
-            'Ralat menghantar data. Sila semak URL Apps Script.';
-
-    }
-
-    setTimeout(() => {
-
-        btn.disabled = false;
-
-        btn.innerHTML =
-            '<i class="fa-solid fa-paper-plane"></i> ' +
-            'Hantar Markah Sekarang';
-
-    }, 1000);
-}
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang`;
+            }, 1000);
+        }
 
         window.onload = function() {
             renderGateCards();
@@ -1222,6 +994,5 @@ function doPost(e) {
             updateExerciseBadges();
         };
     </script>
-
 </body>
 </html>
