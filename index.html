@@ -222,14 +222,7 @@
                     <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
                         <i class="fa-solid fa-link text-sky-400"></i> Tetapan Pautan Webhook Google Sheet (Apps Script)
                     </h3>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">
-                            URL Web App Google Apps Script (Opsional / Biarkan kosong untuk mod simulasi):
-                        </label>
-                        <input type="text" id="webhookUrlInput" placeholder="https://script.google.com/macros/s/.../exec"
-                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono">
-                    </div>
-
+                    
                     <div class="flex flex-wrap items-center gap-3 pt-2">
                         <button onclick="submitToGoogleSheet()" id="btnSubmitSheet" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
                             <i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang
@@ -942,50 +935,85 @@ function doPost(e) {
             guide.classList.toggle('hidden');
         }
 
-        async function submitToGoogleSheet() {
-            const webhookUrl = document.getElementById('webhookUrlInput').value.trim();
-            const btn = document.getElementById('btnSubmitSheet');
-            const msgBox = document.getElementById('submitStatusMsg');
+        const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbwoCYda3WY7axvplQUCiyxzJHSJkUTAr3skml6r665nF_dIpO0oGRQLFLfyVg3MGQ9n/exec";
 
-            const score = window.userData.scores[1] || 0;
-            const overallPercentage = Math.round((score / 10) * 100);
 
-            const payload = {
-                nama: window.userData.nama,
-                latihan: score,
-                jumlahMarkah: overallPercentage
-            };
+async function submitToGoogleSheet() {
 
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...`;
+    const btn = document.getElementById('btnSubmitSheet');
+    const msgBox = document.getElementById('submitStatusMsg');
 
-            if (webhookUrl) {
-                try {
-                    await fetch(webhookUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+    // Kira jumlah markah
+    let totalMarks = 0;
 
-                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
-                    msgBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> Data markah ${window.userData.nama} berjaya dihantar ke Google Sheet!`;
-                } catch (err) {
-                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
-                    msgBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Ralat menghantar data: ${err.message}`;
-                }
-            } else {
-                setTimeout(() => {
-                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-sky-950 border border-sky-800 text-sky-300 block";
-                    msgBox.innerHTML = `<i class="fa-solid fa-circle-info"></i> <strong>[MOD SIMULASI]</strong> Markah ${window.userData.nama} (${score}/10 = ${overallPercentage}%) disimulasikan berjaya dihantar! Sila isi URL Webhook untuk penyertaan terus ke borang Google Sheet sebenar.`;
-                }, 800);
-            }
+    for (let i = 1; i <= 5; i++) {
+        totalMarks += (window.userData.scores[i] || 0);
+    }
 
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang`;
-            }, 1000);
-        }
+    // 5 latihan × 5 markah = 25
+    const overallPercentage =
+        Math.round((totalMarks / 25) * 100);
+
+    // Hanya hantar NAMA dan SKOR
+    const payload = {
+        nama: window.userData.nama,
+        skor: overallPercentage
+    };
+
+    btn.disabled = true;
+
+    btn.innerHTML =
+        `<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...`;
+
+    try {
+
+        await fetch(GOOGLE_SCRIPT_URL, {
+
+            method: 'POST',
+
+            mode: 'no-cors',
+
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+
+            body: JSON.stringify(payload)
+
+        });
+
+        msgBox.className =
+            "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+
+        msgBox.innerHTML =
+            `<i class="fa-solid fa-circle-check"></i>
+             Markah ${window.userData.nama}
+             (${overallPercentage}%)
+             berjaya dihantar ke Google Sheet!`;
+
+    } catch (err) {
+
+        console.error(err);
+
+        msgBox.className =
+            "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
+
+        msgBox.innerHTML =
+            `<i class="fa-solid fa-triangle-exclamation"></i>
+             Ralat menghantar data.`;
+
+    }
+
+    setTimeout(() => {
+
+        btn.disabled = false;
+
+        btn.innerHTML =
+            `<i class="fa-solid fa-paper-plane"></i>
+             Hantar Markah Sekarang`;
+
+    }, 1000);
+}
 
         window.onload = function() {
             renderGateCards();
