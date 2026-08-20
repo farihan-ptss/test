@@ -1123,60 +1123,97 @@ function doPost(e) {
             guide.classList.toggle('hidden');
         }
 
-        async function submitToGoogleSheet() {
-            const webhookUrl = document.getElementById('webhookUrlInput').value.trim();
-            const btn = document.getElementById('btnSubmitSheet');
-            const msgBox = document.getElementById('submitStatusMsg');
+   async function submitToGoogleSheet() {
 
-            // Calculate overall percentage
-            let totalMarks = 0;
-            for (let i = 1; i <= 5; i++) {
-                totalMarks += (window.userData.scores[i] || 0);
-            }
-            const overallPercentage = Math.round((totalMarks / 25) * 100);
+    const webhookUrl =
+        document.getElementById('webhookUrlInput').value.trim();
 
-            const payload = {
-                nama: window.userData.nama,
-                latihan1: window.userData.scores[1] || 0,
-                latihan2: window.userData.scores[2] || 0,
-                latihan3: window.userData.scores[3] || 0,
-                latihan4: window.userData.scores[4] || 0,
-                latihan5: window.userData.scores[5] || 0,
-                jumlahMarkah: overallPercentage
-            };
+    const btn =
+        document.getElementById('btnSubmitSheet');
 
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...`;
+    const msgBox =
+        document.getElementById('submitStatusMsg');
 
-            if (webhookUrl) {
-                try {
-                    // Send to actual Apps Script endpoint
-                    await fetch(webhookUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+    // Kira jumlah markah
+    let totalMarks = 0;
 
-                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
-                    msgBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> Data markah ${window.userData.nama} berjaya dihantar ke Google Sheet!`;
-                } catch (err) {
-                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
-                    msgBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Ralat menghantar data: ${err.message}`;
-                }
-            } else {
-                // Simulation mode if URL is empty
-                setTimeout(() => {
-                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-sky-950 border border-sky-800 text-sky-300 block";
-                    msgBox.innerHTML = `<i class="fa-solid fa-circle-info"></i> <strong>[MOD SIMULASI]</strong> Markah ${window.userData.nama} (${overallPercentage}%) disimulasikan berjaya dihantar! Sila isi URL Webhook untuk penyertaan terus ke borang Google Sheet sebenar.`;
-                }, 800);
-            }
+    for (let i = 1; i <= 5; i++) {
+        totalMarks += (window.userData.scores[i] || 0);
+    }
 
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang`;
-            }, 1000);
-        }
+    const overallPercentage =
+        Math.round((totalMarks / 25) * 100);
+
+    // Hanya hantar NAMA dan SKOR
+    const payload = {
+        nama: window.userData.nama,
+        skor: overallPercentage
+    };
+
+    // Semak URL
+    if (!webhookUrl) {
+
+        msgBox.className =
+            "p-3 rounded-xl text-xs font-medium bg-amber-950 border border-amber-800 text-amber-300 block";
+
+        msgBox.innerHTML =
+            '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+            'Sila masukkan URL Web App Google Apps Script.';
+
+        return;
+    }
+
+    btn.disabled = true;
+
+    btn.innerHTML =
+        '<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...';
+
+    try {
+
+        await fetch(webhookUrl, {
+
+            method: 'POST',
+
+            mode: 'no-cors',
+
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+
+            body: JSON.stringify(payload)
+
+        });
+
+        msgBox.className =
+            "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+
+        msgBox.innerHTML =
+            '<i class="fa-solid fa-circle-check"></i> ' +
+            'Markah berjaya dihantar ke Google Sheet!';
+
+    } catch (err) {
+
+        console.error(err);
+
+        msgBox.className =
+            "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
+
+        msgBox.innerHTML =
+            '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+            'Ralat menghantar data. Sila semak URL Apps Script.';
+
+    }
+
+    setTimeout(() => {
+
+        btn.disabled = false;
+
+        btn.innerHTML =
+            '<i class="fa-solid fa-paper-plane"></i> ' +
+            'Hantar Markah Sekarang';
+
+    }, 1000);
+}
 
         window.onload = function() {
             renderGateCards();
@@ -1185,44 +1222,6 @@ function doPost(e) {
             updateExerciseBadges();
         };
     </script>
-<script>
 
-const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwoCYda3WY7axvplQUCiyxzJHSJkUTAr3skml6r665nF_dIpO0oGRQLFLfyVg3MGQ9n/exec";
-
-document.getElementById("quizForm").addEventListener("submit", async function(e) {
-
-    e.preventDefault();
-
-    const data = {
-        nama: document.getElementById("nama").value,
-        skor: document.getElementById("skor").value
-    };
-
-    try {
-
-        await fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-                "Content-Type": "text/plain"
-            },
-            body: JSON.stringify(data)
-        });
-
-        alert("Data berjaya disimpan!");
-
-        document.getElementById("quizForm").reset();
-
-    } catch (error) {
-
-        console.error(error);
-        alert("Data gagal disimpan.");
-
-    }
-
-});
-
-</script>
-    
 </body>
 </html>
