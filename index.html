@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ms" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub Pendidikan Interaktif Logik Boolean</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre { font-family: 'Fira Code', monospace; }
+        .gate-card:hover { transform: translateY(-2px); }
+        .tab-btn.active { border-bottom: 3px solid #0284c7; color: #0284c7; font-weight: 700; }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
+                    <i class="fa-solid fa-microchip text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold bg-gradient-to-r from-sky-400 to-indigo-300 bg-clip-text text-transparent">
+                        Hub Logik Boolean Interaktif
+                    </h1>
+                    <p class="text-xs text-slate-400">Modul Pembelajaran & Sistem Penilaian Latihan</p>
+                </div>
+            </div>
+
+            <!-- User Info & Score Pill -->
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-800/90 border border-slate-700/60 rounded-xl px-3 py-1.5 flex items-center gap-3">
+                    <div class="text-right">
+                        <span class="text-[10px] uppercase font-semibold tracking-wider text-slate-400 block">Pelajar</span>
+                        <span id="headerUserName" class="text-sm font-semibold text-sky-400">Pengguna Baru</span>
+                    </div>
+                    <button onclick="openNameModal()" title="Tukar Nama" class="w-8 h-8 rounded-lg bg-slate-700/60 hover:bg-slate-700 flex items-center justify-center text-slate-300 hover:text-white transition">
+                        <i class="fa-solid fa-user-pen text-xs"></i>
+                    </button>
+                </div>
+
+                <div class="bg-slate-800/90 border border-slate-700/60 rounded-xl px-3 py-1.5 flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+                    <div>
+                        <span class="text-[10px] uppercase font-semibold tracking-wider text-slate-400 block">Purata Skor</span>
+                        <span id="headerTotalScore" class="text-sm font-bold text-amber-400">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
+            <nav class="flex space-x-2 sm:space-x-6 overflow-x-auto text-sm font-medium py-1">
+                <button onclick="switchTab('learn')" id="tab-learn" class="tab-btn active px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
+                    <i class="fa-solid fa-book-open"></i> Pembelajaran Gerbang
+                </button>
+                <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
+                    <i class="fa-solid fa-diagram-project"></i> Pembina Litar
+                </button>
+                <button onclick="switchTab('exercises')" id="tab-exercises" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
+                    <i class="fa-solid fa-pen-to-square"></i> 5 Modul Latihan
+                </button>
+                <button onclick="switchTab('sheets')" id="tab-sheets" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
+                    <i class="fa-solid fa-file-excel text-emerald-400"></i> Integrasi Google Sheet
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- TAB 1: PEMBELAJARAN GERBANG LOGIK -->
+        <section id="section-learn" class="space-y-6">
+            <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-sky-950/40 p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-bolt text-sky-400"></i> Operasi & Gerbang Logik Asas
+                </h2>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Operasi logik Boolean merupakan asas kepada fungsi pemproses dan komputer digital. Klik suis untuk mengubah data masukan (Input <code class="bg-slate-800 text-sky-300 px-1.5 py-0.5 rounded">0</code> atau <code class="bg-slate-800 text-sky-300 px-1.5 py-0.5 rounded">1</code>) dan perhatikan hasilnya pada mentol keluaran (Output Y).
+                </p>
+            </div>
+
+            <!-- Gate Interactive Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gatesGrid">
+                <!-- Gates rendered dynamically via JavaScript -->
+            </div>
+        </section>
+
+        <!-- TAB 2: PEMBINA LITAR INTERAKTIF -->
+        <section id="section-simulator" class="hidden space-y-6">
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-microchip text-indigo-400"></i> Simulator Litar Ungkapan Boolean
+                        </h2>
+                        <p class="text-slate-400 text-sm">Pilih preset litar atau bina ungkapan logik kompleks untuk simulasi isyarat sebenar.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select id="circuitPreset" onchange="loadCircuitPreset()" class="bg-slate-800 border border-slate-700 text-xs sm:text-sm text-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
+                            <option value="preset1">Litar 1: Y = (A AND B) OR C</option>
+                            <option value="preset2">Litar 2: Y = NOT(A OR B) AND C</option>
+                            <option value="preset3">Litar 3: Penambah Separuh (Half Adder Y_Sum & Y_Carry)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Canvas / Visualizer Box -->
+                <div class="bg-slate-950 rounded-xl border border-slate-800 p-6 relative min-h-[320px] flex flex-col justify-between overflow-x-auto">
+                    <!-- Circuit Title & Expression display -->
+                    <div class="flex justify-between items-center border-b border-slate-800/80 pb-3 mb-4">
+                        <span id="circuitTitle" class="text-sm font-semibold text-sky-400">Litar Interaktif</span>
+                        <span id="circuitExpr" class="text-xs sm:text-sm font-mono bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg text-amber-300">
+                            Y = (A . B) + C
+                        </span>
+                    </div>
+
+                    <!-- Interactive Nodes Area -->
+                    <div id="circuitVisualizer" class="flex flex-col md:flex-row justify-between items-center gap-8 py-6 my-auto">
+                        <!-- Rendered by JavaScript -->
+                    </div>
+
+                    <!-- Live Signal Legend -->
+                    <div class="flex items-center justify-end gap-4 border-t border-slate-800/80 pt-3 text-xs text-slate-400">
+                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm shadow-emerald-500"></span> Logik 1 (High / ON)</span>
+                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block"></span> Logik 0 (Low / OFF)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: 5 MODUL LATIHAN -->
+        <section id="section-exercises" class="hidden space-y-6">
+            <!-- Exercise Selection Header -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-amber-400"></i> Modul Latihan & Penilaian
+                </h2>
+                <p class="text-slate-300 text-sm mb-4">
+                    Selesaikan 5 modul latihan di bawah. Markah anda akan disimpan secara automatik dan boleh dihantar terus ke Google Sheet guru/pensyarah anda!
+                </p>
+
+                <!-- Navigation between Exercises -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                    <button onclick="selectExercise(1)" id="exBtn-1" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
+                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 1</span>
+                        <span class="text-xs font-semibold text-slate-200 block truncate">Operasi Asas</span>
+                        <span id="badge-ex-1" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
+                    </button>
+                    <button onclick="selectExercise(2)" id="exBtn-2" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
+                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 2</span>
+                        <span class="text-xs font-semibold text-slate-200 block truncate">Ungkapan Logik</span>
+                        <span id="badge-ex-2" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
+                    </button>
+                    <button onclick="selectExercise(3)" id="exBtn-3" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
+                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 3</span>
+                        <span class="text-xs font-semibold text-slate-200 block truncate">Analisis Litar</span>
+                        <span id="badge-ex-3" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
+                    </button>
+                    <button onclick="selectExercise(4)" id="exBtn-4" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative">
+                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 4</span>
+                        <span class="text-xs font-semibold text-slate-200 block truncate">Hukum Boolean</span>
+                        <span id="badge-ex-4" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
+                    </button>
+                    <button onclick="selectExercise(5)" id="exBtn-5" class="ex-nav-btn border border-slate-700 bg-slate-800 hover:border-sky-500 p-3 rounded-xl text-left transition relative col-span-2 sm:col-span-1">
+                        <span class="text-[10px] font-bold tracking-wider text-slate-400 block uppercase">Latihan 5</span>
+                        <span class="text-xs font-semibold text-slate-200 block truncate">Cabaran Aplikasi</span>
+                        <span id="badge-ex-5" class="mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block">0/5</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Exercise Question Container -->
+            <div id="exerciseContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <!-- Question content rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- TAB 4: GOOGLE SHEETS INTEGRATION -->
+        <section id="section-sheets" class="hidden space-y-6">
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-file-excel text-emerald-400"></i> Penghantaran Data & Markah ke Google Sheet
+                    </h2>
+                    <p class="text-slate-300 text-sm">
+                        Anda boleh menghantar rekod pencapaian latihan anda terus ke Google Sheet.
+                    </p>
+                </div>
+
+                <!-- Score Summary Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 1</span>
+                        <span id="summary-score-1" class="text-lg font-bold text-sky-400">0/5</span>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 2</span>
+                        <span id="summary-score-2" class="text-lg font-bold text-sky-400">0/5</span>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 3</span>
+                        <span id="summary-score-3" class="text-lg font-bold text-sky-400">0/5</span>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 4</span>
+                        <span id="summary-score-4" class="text-lg font-bold text-sky-400">0/5</span>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-[10px] text-slate-400 uppercase block font-semibold">Latihan 5</span>
+                        <span id="summary-score-5" class="text-lg font-bold text-sky-400">0/5</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-indigo-900/50 to-sky-900/50 p-3 rounded-xl border border-indigo-700/50">
+                        <span class="text-[10px] text-indigo-300 uppercase block font-semibold">Jumlah Markah</span>
+                        <span id="summary-total" class="text-lg font-bold text-amber-400">0%</span>
+                    </div>
+                </div>
+
+                <!-- Webhook Form & Submit Action -->
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-link text-sky-400"></i> Tetapan Pautan Webhook Google Sheet (Apps Script)
+                    </h3>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">
+                            URL Web App Google Apps Script (Opsional / Biarkan kosong untuk mod simulasi):
+                        </label>
+                        <input type="text" id="webhookUrlInput" placeholder="https://script.google.com/macros/s/.../exec"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono">
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button onclick="submitToGoogleSheet()" id="btnSubmitSheet" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+                            <i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang
+                        </button>
+                        <button onclick="toggleSetupGuide()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm transition border border-slate-700 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question"></i> Panduan Setup Google Sheet
+                        </button>
+                    </div>
+
+                    <!-- Alert message display -->
+                    <div id="submitStatusMsg" class="hidden p-3 rounded-xl text-xs font-medium"></div>
+                </div>
+
+                <!-- Accordion Setup Guide -->
+                <div id="setupGuide" class="hidden bg-slate-950/80 border border-slate-800 rounded-xl p-5 space-y-4 text-xs text-slate-300">
+                    <h4 class="font-bold text-sm text-sky-400">Panduan Ringkas Integrasi Google Sheet:</h4>
+                    <ol class="list-decimal list-inside space-y-2 leading-relaxed">
+                        <li>Buka Google Sheet baharu dan pergi ke <strong class="text-white">Extensions &gt; Apps Script</strong>.</li>
+                        <li>Padamkan kod asal dan gantikan dengan skrip di bawah:</li>
+                    </ol>
+                    <pre class="bg-slate-900 border border-slate-800 p-3 rounded-lg text-amber-300 overflow-x-auto text-[11px] leading-snug">
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    // Tambah header jika helai masih kosong
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Masa Hantar", "Nama Pelajar", "Latihan 1", "Latihan 2", "Latihan 3", "Latihan 4", "Latihan 5", "Jumlah Markah (%)"]);
+    }
+    
+    sheet.appendRow([
+      new Date(),
+      data.nama,
+      data.latihan1 + "/5",
+      data.latihan2 + "/5",
+      data.latihan3 + "/5",
+      data.latihan4 + "/5",
+      data.latihan5 + "/5",
+      data.jumlahMarkah + "%"
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre>
+                    <ol start="3" class="list-decimal list-inside space-y-2 leading-relaxed">
+                        <li>Klik <strong class="text-white">Deploy &gt; New deployment</strong>.</li>
+                        <li>Pilih jenis <strong class="text-white">Web app</strong>. Setkan <em>Who has access</em> kepada <strong class="text-emerald-400">Anyone</strong>.</li>
+                        <li>Klik <strong class="text-white">Deploy</strong>, salin URL Web App yang dihasilkan dan tampal di dalam ruang URL di atas.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- USER NAME MODAL -->
+    <div id="nameModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
+                    <i class="fa-solid fa-user-gear text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white">Profil Pelajar</h3>
+                    <p class="text-xs text-slate-400">Masukkan nama anda untuk mula belajar & menyimpan keputusan.</p>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Penuh Pelajar:</label>
+                <input type="text" id="modalNameInput" placeholder="Contoh: Muhammad Ali bin Ahmad"
+                    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm">
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="saveUserName()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition">
+                    Simpan & Teruskan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'boolean-logic-hub';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "demo-api-key",
+            authDomain: "demo-app.firebaseapp.com",
+            projectId: "demo-app",
+            storageBucket: "demo-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        let app, auth, db;
+        let currentUser = null;
+
+        // Application State
+        window.userData = {
+            nama: "Pelajar Baru",
+            scores: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+            answers: { 1: {}, 2: {}, 3: {}, 4: {}, 5: {} }
+        };
+
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            // Auth Handling
+            const initAuth = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            };
+            initAuth().catch(err => console.debug("Auth fallback silent:", err));
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadUserProfile();
+                }
+            });
+        } catch (err) {
+            console.debug("Firebase init fallback:", err);
+        }
+
+        // Firestore Storage Functions
+        async function saveUserDataToCloud() {
+            if (!currentUser || !db) return;
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'profile', 'data');
+                await setDoc(userDocRef, {
+                    nama: window.userData.nama,
+                    scores: window.userData.scores,
+                    lastUpdated: new Date().toISOString()
+                }, { merge: true });
+            } catch (err) {
+                console.debug("Error saving user data:", err);
+            }
+        }
+
+        async function loadUserProfile() {
+            if (!currentUser || !db) return;
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'profile', 'data');
+                const docSnap = await getDoc(userDocRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.nama) window.userData.nama = data.nama;
+                    if (data.scores) window.userData.scores = data.scores;
+                    updateUIHeader();
+                    updateExerciseBadges();
+                } else {
+                    // Open name modal if new
+                    openNameModal();
+                }
+            } catch (err) {
+                console.debug("Error loading profile:", err);
+            }
+        }
+
+        window.saveUserDataToCloud = saveUserDataToCloud;
+    </script>
+
+    <!-- Main Logic Script -->
+    <script>
+        const GATES_DATA = [
+            {
+                id: 'and',
+                name: 'Gerbang AND',
+                expr: 'Y = A . B',
+                desc: 'Keluaran Y = 1 HANYA APABILA kedua-dua masukan A dan B bernilai 1.',
+                inputs: ['A', 'B'],
+                eval: (a, b) => a && b ? 1 : 0,
+                table: [
+                    {a:0, b:0, y:0}, {a:0, b:1, y:0},
+                    {a:1, b:0, y:0}, {a:1, b:1, y:1}
+                ]
+            },
+            {
+                id: 'or',
+                name: 'Gerbang OR',
+                expr: 'Y = A + B',
+                desc: 'Keluaran Y = 1 sekiranya MANA-MANA masukan A atau B bernilai 1.',
+                inputs: ['A', 'B'],
+                eval: (a, b) => a || b ? 1 : 0,
+                table: [
+                    {a:0, b:0, y:0}, {a:0, b:1, y:1},
+                    {a:1, b:0, y:1}, {a:1, b:1, y:1}
+                ]
+            },
+            {
+                id: 'not',
+                name: 'Gerbang NOT (Inverter)',
+                expr: 'Y = A\'',
+                desc: 'Menterbalikkan nilai masukan. Jika A = 0, Y = 1; Jika A = 1, Y = 0.',
+                inputs: ['A'],
+                eval: (a) => a ? 0 : 1,
+                table: [
+                    {a:0, y:1}, {a:1, y:0}
+                ]
+            },
+            {
+                id: 'nand',
+                name: 'Gerbang NAND',
+                expr: 'Y = (A . B)\'',
+                desc: 'Pelengkap kepada AND. Y = 0 HANYA APABILA A dan B kedua-duanya 1.',
+                inputs: ['A', 'B'],
+                eval: (a, b) => !(a && b) ? 1 : 0,
+                table: [
+                    {a:0, b:0, y:1}, {a:0, b:1, y:1},
+                    {a:1, b:0, y:1}, {a:1, b:1, y:0}
+                ]
+            },
+            {
+                id: 'nor',
+                name: 'Gerbang NOR',
+                expr: 'Y = (A + B)\'',
+                desc: 'Pelengkap kepada OR. Y = 1 HANYA APABILA A dan B kedua-duanya 0.',
+                inputs: ['A', 'B'],
+                eval: (a, b) => !(a || b) ? 1 : 0,
+                table: [
+                    {a:0, b:0, y:1}, {a:0, b:1, y:0},
+                    {a:1, b:0, y:0}, {a:1, b:1, y:0}
+                ]
+            },
+            {
+                id: 'xor',
+                name: 'Gerbang XOR (Exclusive-OR)',
+                expr: 'Y = A ⊕ B',
+                desc: 'Keluaran Y = 1 HANYA APABILA nilai masukan A dan B berbeza.',
+                inputs: ['A', 'B'],
+                eval: (a, b) => (a !== b) ? 1 : 0,
+                table: [
+                    {a:0, b:0, y:0}, {a:0, b:1, y:1},
+                    {a:1, b:0, y:1}, {a:1, b:1, y:0}
+                ]
+            }
+        ];
+
+        // Gate state tracking
+        const gateInputsState = {
+            and: [0, 0],
+            or: [0, 0],
+            not: [0],
+            nand: [0, 0],
+            nor: [0, 0],
+            xor: [0, 0]
+        };
+
+        function renderGateCards() {
+            const container = document.getElementById('gatesGrid');
+            container.innerHTML = '';
+
+            GATES_DATA.forEach(gate => {
+                const inputs = gateInputsState[gate.id];
+                const output = gate.eval(...inputs);
+
+                let switchesHtml = gate.inputs.map((inpName, idx) => `
+                    <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                        <span class="text-xs font-bold text-slate-300">Input ${inpName}</span>
+                        <button onclick="toggleGateInput('${gate.id}', ${idx})" 
+                            class="px-3 py-1 rounded-lg font-mono text-xs font-bold transition flex items-center gap-1.5 ${inputs[idx] ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' : 'bg-slate-800 text-slate-400 border border-slate-700'}">
+                            <span>${inputs[idx] ? 'HIGH (1)' : 'LOW (0)'}</span>
+                            <i class="fa-solid ${inputs[idx] ? 'fa-toggle-on text-emerald-400' : 'fa-toggle-off text-slate-500'}"></i>
+                        </button>
+                    </div>
+                `).join('');
+
+                let tableRows = gate.table.map(row => {
+                    const isCurrent = gate.inputs.length === 2 
+                        ? (row.a === inputs[0] && row.b === inputs[1])
+                        : (row.a === inputs[0]);
+                    return `
+                        <tr class="${isCurrent ? 'bg-sky-900/40 font-bold text-sky-300' : 'text-slate-400'} border-b border-slate-800/60">
+                            <td class="py-1 px-2 text-center">${row.a}</td>
+                            ${gate.inputs.length === 2 ? `<td class="py-1 px-2 text-center">${row.b}</td>` : ''}
+                            <td class="py-1 px-2 text-center ${row.y ? 'text-emerald-400 font-semibold' : ''}">${row.y}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg gate-card transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="font-bold text-slate-100 text-base">${gate.name}</h3>
+                                    <span class="text-xs font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">${gate.expr}</span>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl ${output ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-lg shadow-emerald-500/20' : 'bg-slate-800 text-slate-500'} flex items-center justify-center transition-all">
+                                    <i class="fa-solid fa-lightbulb text-lg ${output ? 'animate-pulse' : ''}"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">${gate.desc}</p>
+
+                            <!-- Switches -->
+                            <div class="space-y-2 mb-4">
+                                ${switchesHtml}
+                            </div>
+                        </div>
+
+                        <!-- Mini Truth Table -->
+                        <div class="mt-2 pt-3 border-t border-slate-800">
+                            <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1">Jadual Kebenaran</span>
+                            <table class="w-full text-xs font-mono">
+                                <thead>
+                                    <tr class="text-slate-400 border-b border-slate-800">
+                                        <th class="py-1">A</th>
+                                        ${gate.inputs.length === 2 ? '<th class="py-1">B</th>' : ''}
+                                        <th class="py-1">Y</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleGateInput(gateId, inputIndex) {
+            gateInputsState[gateId][inputIndex] = gateInputsState[gateId][inputIndex] ? 0 : 1;
+            renderGateCards();
+        }
+
+        let circuitInputs = { A: 1, B: 0, C: 1 };
+
+        function renderCircuitVisualizer() {
+            const presetKey = document.getElementById('circuitPreset').value;
+            const container = document.getElementById('circuitVisualizer');
+            const titleEl = document.getElementById('circuitTitle');
+            const exprEl = document.getElementById('circuitExpr');
+
+            if (presetKey === 'preset1') {
+                titleEl.textContent = 'Litar Preset 1: Gabungan AND & OR';
+                exprEl.textContent = 'Y = (A . B) + C';
+
+                const andOut = circuitInputs.A && circuitInputs.B ? 1 : 0;
+                const finalOut = andOut || circuitInputs.C ? 1 : 0;
+
+                container.innerHTML = `
+                    <!-- Inputs Column -->
+                    <div class="flex flex-col gap-4">
+                        ${renderInputSwitch('A', circuitInputs.A)}
+                        ${renderInputSwitch('B', circuitInputs.B)}
+                        ${renderInputSwitch('C', circuitInputs.C)}
+                    </div>
+
+                    <!-- Gate Level 1 -->
+                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
+                        <span class="text-xs font-bold text-sky-400 mb-1">Gerbang AND</span>
+                        <div class="text-xs font-mono text-slate-300">Outputs: ${andOut}</div>
+                    </div>
+
+                    <!-- Gate Level 2 -->
+                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
+                        <span class="text-xs font-bold text-indigo-400 mb-1">Gerbang OR</span>
+                        <div class="text-xs font-mono text-slate-300">Combines AND + C</div>
+                    </div>
+
+                    <!-- Output Bulb -->
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl ${finalOut ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500 shadow-xl shadow-emerald-500/30' : 'bg-slate-900 border border-slate-800 text-slate-600'} flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-lightbulb text-2xl"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold ${finalOut ? 'text-emerald-400' : 'text-slate-500'}">Y = ${finalOut}</span>
+                    </div>
+                `;
+            } else if (presetKey === 'preset2') {
+                titleEl.textContent = 'Litar Preset 2: Gerbang NOR & AND';
+                exprEl.textContent = 'Y = NOT(A + B) . C';
+
+                const norOut = !(circuitInputs.A || circuitInputs.B) ? 1 : 0;
+                const finalOut = norOut && circuitInputs.C ? 1 : 0;
+
+                container.innerHTML = `
+                    <div class="flex flex-col gap-4">
+                        ${renderInputSwitch('A', circuitInputs.A)}
+                        ${renderInputSwitch('B', circuitInputs.B)}
+                        ${renderInputSwitch('C', circuitInputs.C)}
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
+                        <span class="text-xs font-bold text-rose-400 mb-1">Gerbang NOR</span>
+                        <div class="text-xs font-mono text-slate-300">Out: ${norOut}</div>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
+                        <span class="text-xs font-bold text-sky-400 mb-1">Gerbang AND</span>
+                        <div class="text-xs font-mono text-slate-300">NOR + C</div>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="w-14 h-14 rounded-2xl ${finalOut ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500 shadow-xl shadow-emerald-500/30' : 'bg-slate-900 border border-slate-800 text-slate-600'} flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-lightbulb text-2xl"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold ${finalOut ? 'text-emerald-400' : 'text-slate-500'}">Y = ${finalOut}</span>
+                    </div>
+                `;
+            } else if (presetKey === 'preset3') {
+                titleEl.textContent = 'Litar Preset 3: Penambah Separuh (Half Adder)';
+                exprEl.textContent = 'Sum = A ⊕ B , Carry = A . B';
+
+                const sumOut = circuitInputs.A !== circuitInputs.B ? 1 : 0;
+                const carryOut = circuitInputs.A && circuitInputs.B ? 1 : 0;
+
+                container.innerHTML = `
+                    <div class="flex flex-col gap-4">
+                        ${renderInputSwitch('A', circuitInputs.A)}
+                        ${renderInputSwitch('B', circuitInputs.B)}
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                            <span class="text-xs font-bold text-amber-400 block">XOR Gate (Sum)</span>
+                            <span class="text-xs font-mono text-slate-300">Val: ${sumOut}</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                            <span class="text-xs font-bold text-sky-400 block">AND Gate (Carry)</span>
+                            <span class="text-xs font-mono text-slate-300">Val: ${carryOut}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center gap-3 bg-slate-900 p-2 rounded-xl border border-slate-800">
+                            <div class="w-10 h-10 rounded-lg ${sumOut ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500' : 'bg-slate-800 text-slate-600'} flex items-center justify-center">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-slate-300 block">Hasil Tambah (Sum)</span>
+                                <span class="text-xs font-mono font-bold ${sumOut ? 'text-emerald-400' : 'text-slate-500'}">${sumOut}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-900 p-2 rounded-xl border border-slate-800">
+                            <div class="w-10 h-10 rounded-lg ${carryOut ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500' : 'bg-slate-800 text-slate-600'} flex items-center justify-center">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-slate-300 block">Bawa (Carry Out)</span>
+                                <span class="text-xs font-mono font-bold ${carryOut ? 'text-emerald-400' : 'text-slate-500'}">${carryOut}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderInputSwitch(label, value) {
+            return `
+                <div class="flex items-center gap-3 bg-slate-900 px-4 py-2 rounded-xl border border-slate-800">
+                    <span class="text-xs font-bold text-slate-200">Akar ${label}:</span>
+                    <button onclick="toggleCircuitInput('${label}')" 
+                        class="px-3 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-2 ${value ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' : 'bg-slate-800 text-slate-400 border border-slate-700'}">
+                        <span>${value ? 'HIGH (1)' : 'LOW (0)'}</span>
+                        <i class="fa-solid ${value ? 'fa-toggle-on text-emerald-400' : 'fa-toggle-off text-slate-500'}"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        function toggleCircuitInput(label) {
+            circuitInputs[label] = circuitInputs[label] ? 0 : 1;
+            renderCircuitVisualizer();
+        }
+
+        function loadCircuitPreset() {
+            renderCircuitVisualizer();
+        }
+
+        const EXERCISES_DATA = {
+            1: {
+                title: 'Latihan 1: Asas Gerbang Logik & Jadual Kebenaran',
+                desc: 'Uji kefahaman asas operasi AND, OR, NOT, NAND, NOR, dan XOR.',
+                questions: [
+                    {
+                        q: '1. Apakah keluaran gerbang AND jika input A = 1 dan input B = 0?',
+                        options: ['0', '1', '2', 'Tidak pasti'],
+                        correct: 0,
+                        exp: 'Gerbang AND hanya menghasilkan 1 jika KEDUA-DUA input bernilai 1.'
+                    },
+                    {
+                        q: '2. Manakah gerbang logik yang menghasilkan keluaran 1 apabila kedua-dua input bernilai 0?',
+                        options: ['AND', 'OR', 'NOR', 'XOR'],
+                        correct: 2,
+                        exp: 'NOR adalah pelengkap kepada OR. Untuk input (0,0), OR = 0, maka NOR = 1.'
+                    },
+                    {
+                        q: '3. Gerbang NOT dikenali juga sebagai:',
+                        options: ['Amplifier', 'Inverter (Penterbalik)', 'Multiplexer', 'Adder'],
+                        correct: 1,
+                        exp: 'Gerbang NOT membalikkan bit input (0 menjadi 1, 1 menjadi 0).'
+                    },
+                    {
+                        q: '4. Apakah simbol ungkapan Boolean untuk operasi OR?',
+                        options: ['Tambah (+)', 'Darab (.)', 'Bar (\')', 'Eksklusif (⊕)'],
+                        correct: 0,
+                        exp: 'Operasi OR diwakili oleh simbol penambahan (+).'
+                    },
+                    {
+                        q: '5. Sekiranya input A = 1 dan B = 1, manakah antara berikut menghasilkan keluaran 0?',
+                        options: ['OR', 'AND', 'NAND', 'XOR (sahaja)'],
+                        correct: 2,
+                        exp: 'NAND(1,1) = NOT(1 AND 1) = NOT(1) = 0.'
+                    }
+                ]
+            },
+            2: {
+                title: 'Latihan 2: Penilaian Ungkapan Boolean',
+                desc: 'Kira nilai keluaran Y berdasarkan nilai masukan yang diberikan.',
+                questions: [
+                    {
+                        q: '1. Diberi Y = A . B + C. Jika A = 1, B = 0, C = 1, apakah nilai Y?',
+                        options: ['0', '1'],
+                        correct: 1,
+                        exp: 'A.B = 1.0 = 0. Kemudian Y = 0 + C = 0 + 1 = 1.'
+                    },
+                    {
+                        q: '2. Diberi Y = (A + B)\'. Jika A = 0 dan B = 0, apakah nilai Y?',
+                        options: ['0', '1'],
+                        correct: 1,
+                        exp: 'A + B = 0 + 0 = 0. Pelengkap (0)\' = 1.'
+                    },
+                    {
+                        q: '3. Diberi Y = A\' . B. Jika A = 0 dan B = 1, apakah nilai Y?',
+                        options: ['0', '1'],
+                        correct: 1,
+                        exp: 'A\' = NOT(0) = 1. Maka Y = 1 . 1 = 1.'
+                    },
+                    {
+                        q: '4. Diberi Y = A ⊕ B. Jika A = 1 dan B = 1, apakah nilai Y?',
+                        options: ['0', '1'],
+                        correct: 0,
+                        exp: 'XOR menghasilkan 0 sekiranya kedua-dua masukan adalah SAMA.'
+                    },
+                    {
+                        q: '5. Diberi Y = (A . B . C)\'. Jika A=1, B=1, C=1, apakah nilai Y?',
+                        options: ['0', '1'],
+                        correct: 0,
+                        exp: 'A.B.C = 1. Maka pelengkap (1)\' = 0.'
+                    }
+                ]
+            },
+            3: {
+                title: 'Latihan 3: Analisis Litar Logik',
+                desc: 'Menganalisis sambungan litar untuk menentukan ungkapan Boolean.',
+                questions: [
+                    {
+                        q: '1. Litar mengandungi gerbang AND diikuti oleh gerbang NOT. Apakah nama tunggal bagi gabungan gerbang ini?',
+                        options: ['NOR', 'NAND', 'XOR', 'XNOR'],
+                        correct: 1,
+                        exp: 'NAND bermaksud NOT-AND.'
+                    },
+                    {
+                        q: '2. Apakah ungkapan logik bagi litar di mana A dan B disambung ke gerbang OR, dan hasilnya disambung ke gerbang AND bersama input C?',
+                        options: ['Y = (A + B) . C', 'Y = (A . B) + C', 'Y = A + B + C', 'Y = A . B . C'],
+                        correct: 0,
+                        exp: 'Keluaran OR ialah (A + B), kemudian di-AND bersama C menjadi (A + B) . C.'
+                    },
+                    {
+                        q: '3. Berapakah baris kombinasi input dalam jadual kebenaran untuk litar dengan 3 input (A, B, C)?',
+                        options: ['4', '6', '8', '16'],
+                        correct: 2,
+                        exp: 'Bilangan kombinasi = 2^n = 2^3 = 8 baris.'
+                    },
+                    {
+                        q: '4. Dalam litar Penambah Separuh (Half Adder), gerbang manakah yang menentukan nilai "Hasil Tambah" (Sum)?',
+                        options: ['AND', 'OR', 'XOR', 'NAND'],
+                        correct: 2,
+                        exp: 'Keluaran Sum dijanakan oleh gerbang XOR (A ⊕ B).'
+                    },
+                    {
+                        q: '5. Jika dua gerbang NOT disambung secara bersiri (Inverter ganda dua), apakah hasil keluaran Y untuk input A?',
+                        options: ['Y = A\'', 'Y = A', 'Y = 0', 'Y = 1'],
+                        correct: 1,
+                        exp: 'Penterbalikan dua kali memulangkan nilai asal: (A\')\' = A.'
+                    }
+                ]
+            },
+            4: {
+                title: 'Latihan 4: Hukum & Teorem Boolean',
+                desc: 'Permudahan ungkapan mengikut hukum algebra Boolean (De Morgan, Idempotent, dll).',
+                questions: [
+                    {
+                        q: '1. Mengikut Hukum De Morgan, (A . B)\' adalah bersamaan dengan:',
+                        options: ['A\' . B\'', 'A\' + B\'', 'A + B', 'A . B'],
+                        correct: 1,
+                        exp: 'Hukum De Morgan Pertama: (A . B)\' = A\' + B\'.'
+                    },
+                    {
+                        q: '2. Permudahkan ungkapan Boolean: A + 0 = ?',
+                        options: ['0', '1', 'A', 'A\''],
+                        correct: 2,
+                        exp: 'Hukum Identiti: Sebarang pembolehubah di-OR bersama 0 mengekalkan nilainya (A).'
+                    },
+                    {
+                        q: '3. Permudahkan ungkapan Boolean: A . A\' = ?',
+                        options: ['0', '1', 'A', '2A'],
+                        correct: 0,
+                        exp: 'Hukum Pelengkap: Salah satu bernilai 0, maka pendaraban AND sentiasa bernilai 0.'
+                    },
+                    {
+                        q: '4. Permudahkan ungkapan Boolean: A + A . B = ?',
+                        options: ['B', 'A . B', 'A', '1'],
+                        correct: 2,
+                        exp: 'Hukum Penyerapan (Absorption Law): A + AB = A(1 + B) = A(1) = A.'
+                    },
+                    {
+                        q: '5. Mengikut Hukum Kalis Agihan (Distributive Law), A . (B + C) = ?',
+                        options: ['(A . B) + (A . C)', '(A + B) . (A + C)', 'A . B . C', 'A + B + C'],
+                        correct: 0,
+                        exp: 'A . (B + C) = A.B + A.C.'
+                    }
+                ]
+            },
+            5: {
+                title: 'Latihan 5: Cabaran Aplikasi & Litar Dunia Nyata',
+                desc: 'Aplikasi logik Boolean dalam sistem komputer dan kawalan keselamatan automatik.',
+                questions: [
+                    {
+                        q: '1. Sebuah penggera rumah berbunyi (Y=1) jika Suis Keselamatan dihidupkan (S=1) DAN Pengesan Gerakan mengesan penceroboh (M=1). Ungkapan Boolean bagi litar ini ialah:',
+                        options: ['Y = S + M', 'Y = S . M', 'Y = (S . M)\'', 'Y = S ⊕ M'],
+                        correct: 1,
+                        exp: 'Syarat "DAN" memerlukan gerbang AND: Y = S . M.'
+                    },
+                    {
+                        q: '2. Sistem keselamatan kereta membenarkan enjin dihidupkan jika Kunci dimasukkan (K=1) DAN (Brek ditekan (B=1) OR Punang Mula ditekan (P=1)). Ungkapan logiknya ialah:',
+                        options: ['Y = K . B . P', 'Y = K + B + P', 'Y = K . (B + P)', 'Y = (K + B) . P'],
+                        correct: 2,
+                        exp: 'Kunci di-AND bersama gabungan OR brek/butang: K . (B + P).'
+                    },
+                    {
+                        q: '3. Gerbang universiti yang boleh membina SEBARANG operasi gerbang logik lain dikenali sebagai:',
+                        options: ['AND & OR', 'NAND & NOR', 'XOR & XNOR', 'NOT & AND'],
+                        correct: 1,
+                        exp: 'NAND dan NOR dikenali sebagai Universal Gates kerana boleh membina mana-mana litar logik.'
+                    },
+                    {
+                        q: '4. Dalam sistem pemproses komputer (ALU), komparator dua bit menyemak sama ada bit A dan bit B adalah SAMA. Gerbang manakah yang menghasilkan 1 apabila A dan B SAMA?',
+                        options: ['XOR', 'XNOR', 'OR', 'NAND'],
+                        correct: 1,
+                        exp: 'XNOR (Exclusive-NOR) menghasilkan 1 HANYA jika kedua-dua input berkeadaan sama (0,0 atau 1,1).'
+                    },
+                    {
+                        q: '5. Apakah fungsi litar Penambah Penuh (Full Adder) berbanding Penambah Separuh (Half Adder)?',
+                        options: ['Boleh menambah 3 bit termasuk Carry In', 'Hanya boleh menambah bit negatif', 'Lebih lambat dari Half Adder', 'Menggunakan hanya 1 gerbang'],
+                        correct: 0,
+                        exp: 'Full Adder mengambil kira 3 masukan: Input A, Input B, dan Carry-In (Cin) daripada bit sebelumnya.'
+                    }
+                ]
+            }
+        };
+
+        let currentActiveEx = 1;
+
+        function selectExercise(exId) {
+            currentActiveEx = exId;
+
+            // Highlight active navigation button
+            document.querySelectorAll('.ex-nav-btn').forEach(btn => {
+                btn.classList.remove('border-sky-500', 'ring-2', 'ring-sky-500/50');
+            });
+            const activeBtn = document.getElementById(`exBtn-${exId}`);
+            if (activeBtn) activeBtn.classList.add('border-sky-500', 'ring-2', 'ring-sky-500/50');
+
+            renderExerciseContent(exId);
+        }
+
+        function renderExerciseContent(exId) {
+            const data = EXERCISES_DATA[exId];
+            const container = document.getElementById('exerciseContainer');
+            const userAns = window.userData.answers[exId] || {};
+
+            let questionsHtml = data.questions.map((q, qIdx) => {
+                const selected = userAns[qIdx];
+                const isAnswered = selected !== undefined;
+                const isCorrect = isAnswered && selected === q.correct;
+
+                let optionsHtml = q.options.map((opt, optIdx) => {
+                    let optStyle = "bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700";
+                    if (isAnswered) {
+                        if (optIdx === q.correct) {
+                            optStyle = "bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold";
+                        } else if (optIdx === selected) {
+                            optStyle = "bg-rose-950/80 border-rose-500 text-rose-300 font-bold";
+                        }
+                    }
+
+                    return `
+                        <button onclick="answerQuestion(${exId}, ${qIdx}, ${optIdx})" 
+                            ${isAnswered ? 'disabled' : ''}
+                            class="w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition flex items-center justify-between ${optStyle}">
+                            <span>${String.fromCharCode(65 + optIdx)}. ${opt}</span>
+                            ${isAnswered && optIdx === q.correct ? '<i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>' : ''}
+                            ${isAnswered && optIdx === selected && optIdx !== q.correct ? '<i class="fa-solid fa-circle-xmark text-rose-400 text-base"></i>' : ''}
+                        </button>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="bg-slate-950/60 border border-slate-800 p-5 rounded-2xl space-y-3">
+                        <p class="font-semibold text-slate-100 text-sm sm:text-base leading-relaxed">${q.q}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                            ${optionsHtml}
+                        </div>
+                        ${isAnswered ? `
+                            <div class="mt-3 p-3 rounded-xl ${isCorrect ? 'bg-emerald-950/40 border border-emerald-800/60 text-emerald-300' : 'bg-amber-950/40 border border-amber-800/60 text-amber-300'} text-xs leading-relaxed">
+                                <strong>${isCorrect ? 'Tahniah! Jawapan Tepat.' : 'Penjelasan Jawapan:'}</strong> ${q.exp}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            const score = window.userData.scores[exId] || 0;
+
+            container.innerHTML = `
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4 mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">${data.title}</h3>
+                        <p class="text-xs text-slate-400">${data.desc}</p>
+                    </div>
+                    <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl flex items-center gap-3">
+                        <span class="text-xs text-slate-400 font-medium">Markah Anda:</span>
+                        <span class="text-base font-bold text-amber-400 font-mono">${score} / 5</span>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    ${questionsHtml}
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-slate-800 flex justify-between items-center">
+                    <button onclick="resetExercise(${exId})" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i> Selesaikan Semula Latihan Ini
+                    </button>
+                    ${exId < 5 ? `
+                        <button onclick="selectExercise(${exId + 1})" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition flex items-center gap-2">
+                            <span>Seterusnya: Latihan ${exId + 1}</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    ` : `
+                        <button onclick="switchTab('sheets')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-2">
+                            <span>Hantar Markah ke Google Sheet</span>
+                            <i class="fa-solid fa-file-excel"></i>
+                        </button>
+                    `}
+                </div>
+            `;
+        }
+
+        function answerQuestion(exId, qIdx, optIdx) {
+            if (!window.userData.answers[exId]) window.userData.answers[exId] = {};
+            window.userData.answers[exId][qIdx] = optIdx;
+
+            // Recalculate score for this exercise
+            const exData = EXERCISES_DATA[exId];
+            let currentScore = 0;
+            Object.keys(window.userData.answers[exId]).forEach(index => {
+                if (window.userData.answers[exId][index] === exData.questions[index].correct) {
+                    currentScore++;
+                }
+            });
+
+            window.userData.scores[exId] = currentScore;
+
+            // Save state
+            if (window.saveUserDataToCloud) window.saveUserDataToCloud();
+
+            updateUIHeader();
+            updateExerciseBadges();
+            renderExerciseContent(exId);
+        }
+
+        function resetExercise(exId) {
+            window.userData.answers[exId] = {};
+            window.userData.scores[exId] = 0;
+            if (window.saveUserDataToCloud) window.saveUserDataToCloud();
+            updateUIHeader();
+            updateExerciseBadges();
+            renderExerciseContent(exId);
+        }
+
+        function updateExerciseBadges() {
+            for (let i = 1; i <= 5; i++) {
+                const score = window.userData.scores[i] || 0;
+                const badge = document.getElementById(`badge-ex-${i}`);
+                if (badge) {
+                    badge.textContent = `${score}/5`;
+                    if (score === 5) {
+                        badge.className = "mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 inline-block";
+                    } else if (score > 0) {
+                        badge.className = "mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-400 border border-sky-500/30 inline-block";
+                    } else {
+                        badge.className = "mt-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-700 text-slate-400 inline-block";
+                    }
+                }
+
+                const summaryScore = document.getElementById(`summary-score-${i}`);
+                if (summaryScore) summaryScore.textContent = `${score}/5`;
+            }
+        }
+
+        function updateUIHeader() {
+            document.getElementById('headerUserName').textContent = window.userData.nama || "Pelajar Baru";
+
+            // Calculate total overall score percentage
+            let totalMarks = 0;
+            for (let i = 1; i <= 5; i++) {
+                totalMarks += (window.userData.scores[i] || 0);
+            }
+            const overallPercentage = Math.round((totalMarks / 25) * 100);
+
+            document.getElementById('headerTotalScore').textContent = `${overallPercentage}%`;
+            document.getElementById('summary-total').textContent = `${overallPercentage}%`;
+        }
+
+        function openNameModal() {
+            document.getElementById('modalNameInput').value = window.userData.nama !== "Pelajar Baru" ? window.userData.nama : "";
+            document.getElementById('nameModal').classList.remove('hidden');
+        }
+
+        function saveUserName() {
+            const inputVal = document.getElementById('modalNameInput').value.trim();
+            if (inputVal) {
+                window.userData.nama = inputVal;
+                updateUIHeader();
+                if (window.saveUserDataToCloud) window.saveUserDataToCloud();
+                document.getElementById('nameModal').classList.add('hidden');
+            }
+        }
+
+        function switchTab(tabId) {
+            ['learn', 'simulator', 'exercises', 'sheets'].forEach(t => {
+                document.getElementById(`section-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('active');
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            if (tabId === 'exercises') {
+                selectExercise(currentActiveEx);
+            }
+        }
+
+        function toggleSetupGuide() {
+            const guide = document.getElementById('setupGuide');
+            guide.classList.toggle('hidden');
+        }
+
+        async function submitToGoogleSheet() {
+            const webhookUrl = document.getElementById('webhookUrlInput').value.trim();
+            const btn = document.getElementById('btnSubmitSheet');
+            const msgBox = document.getElementById('submitStatusMsg');
+
+            // Calculate overall percentage
+            let totalMarks = 0;
+            for (let i = 1; i <= 5; i++) {
+                totalMarks += (window.userData.scores[i] || 0);
+            }
+            const overallPercentage = Math.round((totalMarks / 25) * 100);
+
+            const payload = {
+                nama: window.userData.nama,
+                latihan1: window.userData.scores[1] || 0,
+                latihan2: window.userData.scores[2] || 0,
+                latihan3: window.userData.scores[3] || 0,
+                latihan4: window.userData.scores[4] || 0,
+                latihan5: window.userData.scores[5] || 0,
+                jumlahMarkah: overallPercentage
+            };
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...`;
+
+            if (webhookUrl) {
+                try {
+                    // Send to actual Apps Script endpoint
+                    await fetch(webhookUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+                    msgBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> Data markah ${window.userData.nama} berjaya dihantar ke Google Sheet!`;
+                } catch (err) {
+                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
+                    msgBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Ralat menghantar data: ${err.message}`;
+                }
+            } else {
+                // Simulation mode if URL is empty
+                setTimeout(() => {
+                    msgBox.className = "p-3 rounded-xl text-xs font-medium bg-sky-950 border border-sky-800 text-sky-300 block";
+                    msgBox.innerHTML = `<i class="fa-solid fa-circle-info"></i> <strong>[MOD SIMULASI]</strong> Markah ${window.userData.nama} (${overallPercentage}%) disimulasikan berjaya dihantar! Sila isi URL Webhook untuk penyertaan terus ke borang Google Sheet sebenar.`;
+                }, 800);
+            }
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang`;
+            }, 1000);
+        }
+
+        window.onload = function() {
+            renderGateCards();
+            renderCircuitVisualizer();
+            updateUIHeader();
+            updateExerciseBadges();
+        };
+    </script>
+</body>
+</html>
