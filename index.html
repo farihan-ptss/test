@@ -1185,5 +1185,44 @@ function doPost(e) {
             updateExerciseBadges();
         };
     </script>
+<script>
+
+const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwoCYda3WY7axvplQUCiyxzJHSJkUTAr3skml6r665nF_dIpO0oGRQLFLfyVg3MGQ9n/exec";
+
+document.getElementById("quizForm").addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const data = {
+        nama: document.getElementById("nama").value,
+        skor: document.getElementById("skor").value
+    };
+
+    try {
+
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain"
+            },
+            body: JSON.stringify(data)
+        });
+
+        alert("Data berjaya disimpan!");
+
+        document.getElementById("quizForm").reset();
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Data gagal disimpan.");
+
+    }
+
+});
+
+</script>
+    
 </body>
 </html>
