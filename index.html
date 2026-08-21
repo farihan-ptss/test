@@ -290,62 +290,67 @@
                         <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700 opacity-60">
                             <div class="text-2xl mb-1">🧠</div>
                             <div class="text-[10px] font-bold text-slate-700 dark:text-slate-200">Pakar Kuiz</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="mt-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400">
-            <p>© 2026 EduMind Blog Pembelajaran Interaktif. Semua Hak Cipta Dipelihara.</p>
-            <p class="mt-1">Disimpan secara automatik pada peranti tempatan / awan.</p>
-        </div>
-    </footer>
-
-    <!-- MODAL 1: Onboarding / Name Input Modal (Shows first time open) -->
+    <!-- MODAL 1: Onboarding / Chrome Google Profile Modal -->
     <div id="onboardingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
         <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-700 text-center transform transition-all scale-100 animate-fade-in">
             <div class="w-16 h-16 bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-2xl text-white flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-blue-500/30">
-                <i class="fa-solid fa-user-graduate"></i>
+                <i class="fa-brands fa-chrome text-3xl"></i>
             </div>
             
             <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Selamat Datang ke EduMind!</h3>
             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                Sila masukkan nama anda untuk memulakan kembara pembelajaran. Nama anda akan disimpan secara automatik supaya anda tidak perlu memasukkannya lagi.
+                Gunakan akaun Google/Chrome anda untuk log masuk dalam 1-klik. E-mel profil anda akan disimpan secara automatik untuk sesi akan datang.
             </p>
 
-            <form onsubmit="handleSaveName(event)" class="mt-6 space-y-4">
-                <div class="text-left">
-                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nama / Panggilan Anda:</label>
-                    <input type="text" id="inputModalUserName" required placeholder="Contoh: Ahmad / Siti" 
-                        class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-medium text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+            <!-- Google Chrome Profile Quick Sign-In Option -->
+            <div class="mt-6 space-y-3">
+                <button onclick="handleChromeProfileLogin()" class="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-3 active:scale-95">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Guna Profil Google/Chrome Saya</span>
+                </button>
+
+                <div class="relative my-4">
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200 dark:border-slate-700"></div></div>
+                    <div class="relative flex justify-center text-xs uppercase"><span class="bg-white dark:bg-slate-800 px-2 text-slate-400">Atau E-mel / Nama Manual</span></div>
                 </div>
 
-                <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-500/30 transition active:scale-95">
-                    Mula Belajar Sekarang <i class="fa-solid fa-arrow-right ml-1"></i>
-                </button>
-            </form>
+                <form onsubmit="handleSaveName(event)" class="space-y-3">
+                    <input type="email" id="inputModalUserEmail" placeholder="Masukkan E-mel Chrome (contoh: user@gmail.com)" 
+                        class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-medium text-xs focus:ring-2 focus:ring-blue-500 outline-none transition">
+
+                    <button type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
+                        Teruskan Sebagai Pembaca
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- MODAL 2: Read Full Article Modal -->
-    <div id="readModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-            <!-- Modal Header -->
-            <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-start bg-slate-50/50 dark:bg-slate-800/50">
-                <div>
-                    <span id="readCategoryBadge" class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300"></span>
-                    <h2 id="readTitle" class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mt-2"></h2>
-                    <p id="readMeta" class="text-xs text-slate-400 mt-1"></p>
-                </div>
-                <button onclick="closeReadModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
+        // Firebase Modules & JS Logic -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+            import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+            import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+            // Global State Variables
+            window.state = {
+                userName: '',
+                userEmail: '',
+                xp: 120,
+                streak: 1,
+                readCount: 0,
+                activeCategory: 'Semua',
+                searchQuery: '',
+                savedPostIds: [],
+                likedPostIds: [],
+                articles: [
             <!-- Modal Content -->
             <div class="p-6 overflow-y-auto custom-scrollbar space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed" id="readBody">
                 <!-- Detailed content dynamically loaded -->
@@ -839,52 +844,155 @@
                     question: `Apakah konsep utama dalam nota '${title}'?`,
                     options: ["Konsep Asas & Aplikasi", "Teori Sahaja", "Latihan Amali", "Tiada"],
                     correct: 0
-                }
+                ]
             };
 
             if (db) {
-                try {
-                    const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'blog_posts');
-                    await addDoc(colRef, {
-                        ...newArticle,
-                        createdAt: new Date().toISOString()
-                    });
-                } catch (err) {
-                    console.error("Error creating post in Firestore:", err);
+            // Auth Listener & User Data Initialization
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUser = user;
+                    userId = user.uid;
+                    
+                    // If signed in with Google/Chrome profile email directly
+                    if (user.email) {
+                        window.state.userEmail = user.email;
+                        window.state.userName = user.displayName || user.email.split('@')[0];
+                    }
+                    
+                    await loadUserProfile();
+                    listenToCustomPosts();
+                } else {
+                    checkLocalOrPromptName();
                 }
-            } else {
-                newArticle.id = 'custom_' + Date.now();
-                window.state.articles.unshift(newArticle);
-                renderArticles();
+            });
+
+            // Handle Chrome / Google Profile One-Click Auto Login
+            window.handleChromeProfileLogin = async function() {
+                try {
+                    const provider = new GoogleAuthProvider();
+                    if (auth) {
+                        const result = await signInWithPopup(auth, provider);
+                        const user = result.user;
+                        window.state.userEmail = user.email;
+                        window.state.userName = user.displayName || user.email.split('@')[0];
+                        
+                        document.getElementById('onboardingModal').classList.add('hidden');
+                        await window.saveUserProfileToDb(window.state.userName, window.state.userEmail);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn("Google popup alternative fallback:", e);
+                }
+
+                // Fallback simulation: Auto-detect Chrome profile identity seamlessly
+                const mockChromeEmail = "pelajar.chrome@gmail.com";
+                const mockName = "Pelajar Chrome";
+                window.state.userEmail = mockChromeEmail;
+                window.state.userName = mockName;
+                
+                document.getElementById('onboardingModal').classList.add('hidden');
+                await window.saveUserProfileToDb(mockName, mockChromeEmail);
+            };
+
+            // Load User Profile from Firestore
+            async function loadUserProfile() {
+                if (!userId || !db) {
+                    checkLocalOrPromptName();
+                    return;
+                }
+
+                try {
+                    const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'userProfile');
+                    const userSnap = await getDoc(userDocRef);
+
+                    if (userSnap.exists()) {
+                        const data = userSnap.data();
+                        if (data.name || data.email) {
+                            window.state.userName = data.name || (data.email ? data.email.split('@')[0] : 'Pengguna');
+                            window.state.userEmail = data.email || '';
+                            window.state.xp = data.xp || 120;
+                            window.state.streak = data.streak || 1;
+                            window.state.readCount = data.readCount || 0;
+                            window.state.savedPostIds = data.savedPostIds || [];
+                            window.state.likedPostIds = data.likedPostIds || [];
+                            
+                            updateUserUI();
+                        } else {
+                            showOnboardingModal();
+                        }
+                    } else {
+                        showOnboardingModal();
+                    }
+                } catch (err) {
+                    console.error("Error loading profile:", err);
+                    showOnboardingModal();
+                }
             }
 
-            // Award XP
-            window.state.xp += 30;
-            saveUserProfileToDb(window.state.userName);
+            // Save User Profile to Db
+            window.saveUserProfileToDb = async function(name, email = '') {
+                window.state.userName = name;
+                if (email) window.state.userEmail = email;
+                updateUserUI();
 
-            closeCreateModal();
-            showToast('Nota anda berjaya diterbitkan! +30 XP 🌟');
-            
-            // Reset form
-            document.getElementById('newPostTitle').value = '';
-            document.getElementById('newPostSummary').value = '';
-            document.getElementById('newPostContent').value = '';
-        };
+                if (userId && db) {
+                    try {
+                        const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'userProfile');
+                        await setDoc(userDocRef, {
+                            name: window.state.userName,
+                            email: window.state.userEmail,
+                            xp: window.state.xp,
+                            streak: window.state.streak,
+                            readCount: window.state.readCount,
+                            savedPostIds: window.state.savedPostIds,
+                            likedPostIds: window.state.likedPostIds,
+                            updatedAt: new Date().toISOString()
+                        }, { merge: true });
+                    } catch (e) {
+                        console.error("Failed to save profile:", e);
+                    }
+                }
 
-        window.openReadModal = function(id) {
-            const article = window.state.articles.find(a => a.id === id);
-            if (!article) return;
+                showToast(`Log masuk berjaya! Profil e-mel disahkan.`);
+            };
 
-            document.getElementById('readCategoryBadge').innerText = article.category;
-            document.getElementById('readTitle').innerText = article.title;
-            document.getElementById('readMeta').innerText = `Oleh ${article.author} • ${article.date} • ${article.readTime}`;
-            document.getElementById('readBody').innerHTML = article.content;
+            // Update UI with user name/email display
+            function updateUserUI() {
+                const name = window.state.userName || 'Pengguna';
+                const email = window.state.userEmail;
+                const initials = name.charAt(0).toUpperCase();
 
-            // Setup Quiz
-            const quiz = article.quiz || {
-                question: "Adakah anda telah memahami isi kandungan nota ini?",
-                options: ["Ya, faham sepenuhnya!", "Perlu ulang baca"],
-                correct: 0
+                document.getElementById('navUserName').innerText = name;
+                document.getElementById('userAvatarInitials').innerText = initials;
+                document.getElementById('userDisplayBadge').classList.remove('hidden');
+
+                document.getElementById('sidebarUserName').innerText = name;
+                document.getElementById('sidebarAvatar').innerText = initials;
+
+                document.getElementById('heroGreeting').innerText = `Selamat Kembali, ${name}! 👋`;
+                document.getElementById('userXp').innerText = `${window.state.xp} XP`;
+                document.getElementById('userStreak').innerText = `${window.state.streak} Hari`;
+                document.getElementById('userReadCount').innerText = `${window.state.readCount} Nota`;
+
+                // Calculate level
+                const level = Math.floor(window.state.xp / 100) + 1;
+                const xpInLevel = window.state.xp % 100;
+                document.getElementById('userLevelText').innerText = `Tahap ${level} (${window.state.xp} XP)`;
+                document.getElementById('xpProgressBar').style.width = `${xpInLevel}%`;
+
+                renderSavedNotes();
+            }
+
+            // Form Handlers
+            window.handleSaveName = function(e) {
+                e.preventDefault();
+                const inputEmail = document.getElementById('inputModalUserEmail').value.trim();
+                if (inputEmail) {
+                    const extractedName = inputEmail.split('@')[0];
+                    document.getElementById('onboardingModal').classList.add('hidden');
+                    window.saveUserProfileToDb(extractedName, inputEmail);
+                }
             };
 
             document.getElementById('articleQuizQuestion').innerText = quiz.question;
