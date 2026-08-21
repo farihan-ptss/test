@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="ms" class="dark">
+<html lang="ms">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendidikan Interaktif Logik Boolean</title>
-    <!-- Tailwind CSS -->
+    <title>EduMind - Blog & Hub Pembelajaran Interaktif</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -13,1011 +18,1010 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0284c7',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                            950: '#082f49',
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        code, pre { font-family: 'Fira Code', monospace; }
-        .gate-card:hover { transform: translateY(-2px); }
-        .tab-btn.active { border-bottom: 3px solid #0284c7; color: #0284c7; font-weight: 700; }
-        /* Custom scrollbars */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 10px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200 flex flex-col justify-between">
 
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
-            <!-- Logo & Title -->
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-30 glass-panel border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <!-- Logo -->
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
-                    <i class="fa-solid fa-microchip text-xl"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold bg-gradient-to-r from-sky-400 to-indigo-300 bg-clip-text text-transparent">
-                        Hub Logik Boolean Interaktif
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        EduMind
                     </h1>
-                    <p class="text-xs text-slate-400">Modul Pembelajaran & Sistem Penilaian Latihan</p>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide uppercase">Blog Pembelajaran</p>
                 </div>
             </div>
 
-            <!-- User Info & Score Pill -->
-            <div class="flex items-center gap-3">
-                <div class="bg-slate-800/90 border border-slate-700/60 rounded-xl px-3 py-1.5 flex items-center gap-3">
-                    <div class="text-right">
-                        <span class="text-[10px] uppercase font-semibold tracking-wider text-slate-400 block">Pelajar</span>
-                        <span id="headerUserName" class="text-sm font-semibold text-sky-400">Pengguna Baru</span>
-                    </div>
-                    <button onclick="openNameModal()" title="Tukar Nama" class="w-8 h-8 rounded-lg bg-slate-700/60 hover:bg-slate-700 flex items-center justify-center text-slate-300 hover:text-white transition">
-                        <i class="fa-solid fa-user-pen text-xs"></i>
-                    </button>
-                </div>
-
-                <div class="bg-slate-800/90 border border-slate-700/60 rounded-xl px-3 py-1.5 flex items-center gap-2">
-                    <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
-                    <div>
-                        <span class="text-[10px] uppercase font-semibold tracking-wider text-slate-400 block">Purata Skor</span>
-                        <span id="headerTotalScore" class="text-sm font-bold text-amber-400">0%</span>
-                    </div>
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-md mx-4">
+                <div class="relative w-full">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="filterPosts()" placeholder="Cari topik, nota, atau subjek..." 
+                        class="w-full pl-10 pr-4 py-2 text-sm rounded-full bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 outline-none transition">
                 </div>
             </div>
-        </div>
-        
-        <!-- Navigation Tabs -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800/60">
-            <nav class="flex space-x-2 sm:space-x-6 overflow-x-auto text-sm font-medium py-1">
-                <button onclick="switchTab('learn')" id="tab-learn" class="tab-btn active px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
-                    <i class="fa-solid fa-book-open"></i> Pembelajaran Gerbang
+
+            <!-- User Status & Actions -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- User Profile Display -->
+                <div id="userDisplayBadge" class="hidden flex items-center space-x-2 bg-blue-50 dark:bg-slate-800 border border-blue-100 dark:border-slate-700 px-3 py-1.5 rounded-full cursor-pointer hover:bg-blue-100 transition" onclick="openEditNameModal()">
+                    <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold" id="userAvatarInitials">
+                        ?
+                    </div>
+                    <span id="navUserName" class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
+                        Memuatkan...
+                    </span>
+                    <i class="fa-solid fa-pen text-[10px] text-slate-400"></i>
+                </div>
+
+                <!-- Create Post Button -->
+                <button onclick="openCreateModal()" class="px-3.5 py-1.5 text-xs sm:text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full shadow-sm shadow-blue-500/30 flex items-center space-x-1.5 transition active:scale-95">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="hidden sm:inline">Cipta Nota</span>
                 </button>
-                <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
-                    <i class="fa-solid fa-diagram-project"></i> Pembina Litar
+
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
                 </button>
-                <button onclick="switchTab('exercises')" id="tab-exercises" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
-                    <i class="fa-solid fa-pen-to-square"></i> Modul Latihan
-                </button>
-                <button onclick="switchTab('sheets')" id="tab-sheets" class="tab-btn px-3 py-2 flex items-center gap-2 whitespace-nowrap text-slate-400 hover:text-slate-200 transition">
-                    <i class="fa-solid fa-file-excel text-emerald-400"></i> Integrasi Google Sheet
-                </button>
-            </nav>
+            </div>
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-        <!-- TAB 1: PEMBELAJARAN GERBANG LOGIK -->
-        <section id="section-learn" class="space-y-6">
-            <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-sky-950/40 p-6 rounded-2xl border border-slate-800 shadow-xl">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2 mb-2">
-                    <i class="fa-solid fa-bolt text-sky-400"></i> Operasi & Gerbang Logik Asas
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
+        
+        <!-- Hero Welcome Card -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white p-6 sm:p-8 shadow-xl mb-8">
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-2xl">
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-blue-100 mb-3">
+                    <i class="fa-solid fa-sparkles text-yellow-300"></i>
+                    <span>Portal Pembelajaran Pintar</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight" id="heroGreeting">
+                    Selamat Datang ke EduMind!
                 </h2>
-                <p class="text-slate-300 text-sm leading-relaxed">
-                    Operasi logik Boolean merupakan asas kepada fungsi pemproses dan komputer digital. Klik suis untuk mengubah data masukan (Input <code class="bg-slate-800 text-sky-300 px-1.5 py-0.5 rounded">0</code> atau <code class="bg-slate-800 text-sky-300 px-1.5 py-0.5 rounded">1</code>) dan perhatikan hasilnya pada mentol keluaran (Output Y).
+                <p class="mt-2 text-sm sm:text-base text-blue-100 leading-relaxed" id="heroQuote">
+                    "Pendidikan adalah senjata paling berkuasa yang boleh anda gunakan untuk mengubah dunia." — Nelson Mandela
                 </p>
-            </div>
-
-            <!-- Gate Interactive Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gatesGrid">
-                <!-- Gates rendered dynamically via JavaScript -->
-            </div>
-        </section>
-
-        <!-- TAB 2: PEMBINA LITAR INTERAKTIF -->
-        <section id="section-simulator" class="hidden space-y-6">
-            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-microchip text-indigo-400"></i> Simulator Litar Ungkapan Boolean
-                        </h2>
-                        <p class="text-slate-400 text-sm">Pilih preset litar atau bina ungkapan logik kompleks untuk simulasi isyarat sebenar.</p>
+                
+                <!-- Quick User Stats Bar -->
+                <div class="mt-6 flex flex-wrap items-center gap-4 text-xs sm:text-sm font-medium">
+                    <div class="bg-white/15 backdrop-blur-md px-3.5 py-2 rounded-xl flex items-center space-x-2">
+                        <i class="fa-solid fa-fire text-orange-400"></i>
+                        <span>Streak: <strong id="userStreak">1 Hari</strong></span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <select id="circuitPreset" onchange="loadCircuitPreset()" class="bg-slate-800 border border-slate-700 text-xs sm:text-sm text-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
-                            <option value="preset1">Litar 1: Y = (A AND B) OR C</option>
-                            <option value="preset2">Litar 2: Y = NOT(A OR B) AND C</option>
-                            <option value="preset3">Litar 3: Penambah Separuh (Half Adder Y_Sum & Y_Carry)</option>
-                        </select>
+                    <div class="bg-white/15 backdrop-blur-md px-3.5 py-2 rounded-xl flex items-center space-x-2">
+                        <i class="fa-solid fa-star text-yellow-300"></i>
+                        <span>Mata XP: <strong id="userXp">120 XP</strong></span>
                     </div>
-                </div>
-
-                <!-- Canvas / Visualizer Box -->
-                <div class="bg-slate-950 rounded-xl border border-slate-800 p-6 relative min-h-[320px] flex flex-col justify-between overflow-x-auto">
-                    <!-- Circuit Title & Expression display -->
-                    <div class="flex justify-between items-center border-b border-slate-800/80 pb-3 mb-4">
-                        <span id="circuitTitle" class="text-sm font-semibold text-sky-400">Litar Interaktif</span>
-                        <span id="circuitExpr" class="text-xs sm:text-sm font-mono bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg text-amber-300">
-                            Y = (A . B) + C
-                        </span>
-                    </div>
-
-                    <!-- Interactive Nodes Area -->
-                    <div id="circuitVisualizer" class="flex flex-col md:flex-row justify-between items-center gap-8 py-6 my-auto">
-                        <!-- Rendered by JavaScript -->
-                    </div>
-
-                    <!-- Live Signal Legend -->
-                    <div class="flex items-center justify-end gap-4 border-t border-slate-800/80 pt-3 text-xs text-slate-400">
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm shadow-emerald-500"></span> Logik 1 (High / ON)</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block"></span> Logik 0 (Low / OFF)</span>
+                    <div class="bg-white/15 backdrop-blur-md px-3.5 py-2 rounded-xl flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open text-cyan-300"></i>
+                        <span>Nota Dibaca: <strong id="userReadCount">0 Nota</strong></span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- TAB 3: MODUL LATIHAN -->
-        <section id="section-exercises" class="hidden space-y-6">
-            <!-- Exercise Header -->
-            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <h2 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-amber-400"></i> Modul Latihan Logik Boolean
-                    </h2>
-                    <p class="text-slate-300 text-sm">
-                        Jawab soalan di bawah. Markah anda akan disimpan secara automatik dan boleh dihantar terus ke Google Sheet!
-                    </p>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl flex items-center gap-3">
-                    <span class="text-xs text-slate-400 font-medium">Markah Latihan:</span>
-                    <span id="badge-ex-1" class="text-base font-bold text-amber-400 font-mono">0 / 10</span>
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-6">
+            <!-- Mobile Search Bar -->
+            <div class="block md:hidden w-full">
+                <div class="relative w-full">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="mobileSearchInput" oninput="syncMobileSearch(this.value)" placeholder="Cari topik..." 
+                        class="w-full pl-10 pr-4 py-2 text-sm rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder-slate-400 outline-none">
                 </div>
             </div>
 
-            <!-- Question Container -->
-            <div id="exerciseContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-                <!-- Question content rendered dynamically -->
+            <!-- Category Pills -->
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 custom-scrollbar text-xs font-semibold">
+                <button onclick="setCategory('Semua')" class="category-btn active px-4 py-2 rounded-xl whitespace-nowrap transition bg-blue-600 text-white shadow-sm" data-cat="Semua">
+                    Semua Subjek
+                </button>
+                <button onclick="setCategory('Sains')" class="category-btn px-4 py-2 rounded-xl whitespace-nowrap transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400" data-cat="Sains">
+                    🧪 Sains
+                </button>
+                <button onclick="setCategory('Matematik')" class="category-btn px-4 py-2 rounded-xl whitespace-nowrap transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400" data-cat="Matematik">
+                    📐 Matematik
+                </button>
+                <button onclick="setCategory('Sejarah')" class="category-btn px-4 py-2 rounded-xl whitespace-nowrap transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400" data-cat="Sejarah">
+                    📜 Sejarah
+                </button>
+                <button onclick="setCategory('Teknologi')" class="category-btn px-4 py-2 rounded-xl whitespace-nowrap transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400" data-cat="Teknologi">
+                    💻 Teknologi
+                </button>
+                <button onclick="setCategory('Tips Belajar')" class="category-btn px-4 py-2 rounded-xl whitespace-nowrap transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400" data-cat="Tips Belajar">
+                    💡 Tips Belajar
+                </button>
             </div>
-        </section>
 
-        <!-- TAB 4: GOOGLE SHEETS INTEGRATION -->
-        <section id="section-sheets" class="hidden space-y-6">
-            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl space-y-6">
-                <div>
-                    <h2 class="text-xl font-bold text-white flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-file-excel text-emerald-400"></i> Penghantaran Data & Markah ke Google Sheet
-                    </h2>
-                    <p class="text-slate-300 text-sm">
-                        Anda boleh menghantar rekod pencapaian latihan anda terus ke Google Sheet guru/pensyarah.
-                    </p>
-                </div>
+            <!-- View Toggle / Count -->
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium self-end md:self-center">
+                Menunjukkan <span id="articleCount" class="font-bold text-slate-700 dark:text-slate-200">0</span> Artikel
+            </div>
+        </div>
 
-                <!-- Score Summary Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-slate-400 uppercase block font-semibold">Markah Latihan (Soalan 1-10)</span>
-                            <span id="summary-score-1" class="text-xl font-bold text-sky-400">0/10</span>
+        <!-- Content Layout (Grid + Sidebar) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Grid: Articles List -->
+            <div class="lg:col-span-2 space-y-6" id="articlesContainer">
+                <!-- Articles dynamically inserted here -->
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="space-y-6">
+                <!-- User Profile Summary Widget -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="flex items-center space-x-3 pb-4 border-b border-slate-100 dark:border-slate-700">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 text-white font-bold flex items-center justify-center text-lg shadow-md" id="sidebarAvatar">
+                            ?
                         </div>
-                        <i class="fa-solid fa-pen-to-square text-slate-600 text-2xl"></i>
-                    </div>
-                    <div class="bg-gradient-to-br from-indigo-900/50 to-sky-900/50 p-4 rounded-xl border border-indigo-700/50 flex justify-between items-center">
                         <div>
-                            <span class="text-xs text-indigo-300 uppercase block font-semibold">Jumlah Markah Keseluruhan</span>
-                            <span id="summary-total" class="text-2xl font-bold text-amber-400">0%</span>
+                            <h3 class="font-bold text-base text-slate-800 dark:text-slate-100" id="sidebarUserName">
+                                Memuatkan...
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Ahli EduMind</p>
                         </div>
-                        <i class="fa-solid fa-trophy text-amber-400 text-2xl"></i>
+                    </div>
+
+                    <div class="pt-4 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-500 dark:text-slate-400">Tahap Pembelajaran</span>
+                            <span class="font-bold text-blue-600 dark:text-blue-400" id="userLevelText">Tahap 1 (Pemula)</span>
+                        </div>
+                        <!-- Progress Bar -->
+                        <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                            <div id="xpProgressBar" class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-500" style="width: 30%"></div>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <button onclick="openEditNameModal()" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium">
+                                <i class="fa-solid fa-user-pen mr-1"></i> Tukar Nama Pengguna
+                            </button>
+                            <button onclick="clearUserData()" class="text-xs text-red-500 hover:underline font-medium">
+                                Reset Data
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Webhook Form & Submit Action -->
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
-                    <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-link text-sky-400"></i> Tetapan Pautan Webhook Google Sheet (Apps Script)
-                    </h3>
-                    
-                    <div class="flex flex-wrap items-center gap-3 pt-2">
-                        <button onclick="submitToGoogleSheet()" id="btnSubmitSheet" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
-                            <i class="fa-solid fa-paper-plane"></i> Hantar Markah Sekarang
+                <!-- Daily Mini Quiz Widget -->
+                <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-2xl p-5 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <i class="fa-solid fa-brain text-7xl"></i>
+                    </div>
+                    <div class="inline-block px-2.5 py-1 rounded-md bg-indigo-500/30 text-indigo-200 text-[11px] font-bold uppercase tracking-wider mb-2">
+                        Cabaran Harian
+                    </div>
+                    <h3 class="font-bold text-base">Uji Minda Hari Ini!</h3>
+                    <p class="text-xs text-indigo-200 mt-1 leading-relaxed">
+                        Apakah organ terpenting dalam sistem pernafasan manusia?
+                    </p>
+                    <div id="miniQuizOptions" class="mt-4 space-y-2">
+                        <button onclick="checkMiniQuiz(this, true)" class="w-full py-2 px-3 text-left text-xs bg-white/10 hover:bg-white/20 rounded-xl transition font-medium border border-white/10">
+                            A. Paru-paru
                         </button>
-                       
+                        <button onclick="checkMiniQuiz(this, false)" class="w-full py-2 px-3 text-left text-xs bg-white/10 hover:bg-white/20 rounded-xl transition font-medium border border-white/10">
+                            B. Jantung
+                        </button>
+                        <button onclick="checkMiniQuiz(this, false)" class="w-full py-2 px-3 text-left text-xs bg-white/10 hover:bg-white/20 rounded-xl transition font-medium border border-white/10">
+                            C. Hati
+                        </button>
+                    </div>
+                    <div id="miniQuizResult" class="hidden mt-3 p-2.5 rounded-xl text-xs font-medium"></div>
+                </div>
+
+                <!-- Personal Notes List Widget -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-blue-500"></i>
+                            <span>Nota Disimpan Saya</span>
+                        </h3>
+                        <span id="savedCountBadge" class="text-xs bg-blue-100 dark:bg-slate-700 text-blue-600 dark:text-blue-300 font-bold px-2 py-0.5 rounded-full">0</span>
                     </div>
 
-                    <!-- Alert message display -->
-                    <div id="submitStatusMsg" class="hidden p-3 rounded-xl text-xs font-medium"></div>
+                    <div id="savedNotesContainer" class="space-y-2 text-xs">
+                        <p class="text-slate-400 italic text-center py-4">Tiada nota disimpan lagi. Klik ikon penanda buku pada mana-mana artikel!</p>
+                    </div>
                 </div>
 
-                <!-- Accordion Setup Guide -->
-                <div id="setupGuide" class="hidden bg-slate-950/80 border border-slate-800 rounded-xl p-5 space-y-4 text-xs text-slate-300">
-                    <h4 class="font-bold text-sm text-sky-400">Panduan Ringkas Integrasi Google Sheet:</h4>
-                    <ol class="list-decimal list-inside space-y-2 leading-relaxed">
-                        <li>Buka Google Sheet baharu dan pergi ke <strong class="text-white">Extensions &gt; Apps Script</strong>.</li>
-                        <li>Padamkan kod asal dan gantikan dengan skrip di bawah:</li>
-                    </ol>
-                    <pre class="bg-slate-900 border border-slate-800 p-3 rounded-lg text-amber-300 overflow-x-auto text-[11px] leading-snug">
-function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
-    
-    // Tambah header jika helai masih kosong
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Masa Hantar", "Nama Pelajar", "Markah Latihan", "Peratusan (%)"]);
-    }
-    
-    sheet.appendRow([
-      new Date(),
-      data.nama,
-      data.latihan + "/10",
-      data.jumlahMarkah + "%"
-    ]);
-    
-    return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}</pre>
-                    <ol start="3" class="list-decimal list-inside space-y-2 leading-relaxed">
-                        <li>Klik <strong class="text-white">Deploy &gt; New deployment</strong>.</li>
-                        <li>Pilih jenis <strong class="text-white">Web app</strong>. Setkan <em>Who has access</em> kepada <strong class="text-emerald-400">Anyone</strong>.</li>
-                        <li>Klik <strong class="text-white">Deploy</strong>, salin URL Web App yang dihasilkan dan tampal di dalam ruang URL di atas.</li>
-                    </ol>
+                <!-- Learning Badges -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-award text-yellow-500"></i>
+                        <span>Lencana Pencapaian</span>
+                    </h3>
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700">
+                            <div class="text-2xl mb-1">🐣</div>
+                            <div class="text-[10px] font-bold text-slate-700 dark:text-slate-200">Pelajar Baru</div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700 opacity-60">
+                            <div class="text-2xl mb-1">🔥</div>
+                            <div class="text-[10px] font-bold text-slate-700 dark:text-slate-200">3 Hari Streak</div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700 opacity-60">
+                            <div class="text-2xl mb-1">🧠</div>
+                            <div class="text-[10px] font-bold text-slate-700 dark:text-slate-200">Pakar Kuiz</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
-
+        </div>
     </main>
 
-    <!-- USER NAME MODAL -->
-    <div id="nameModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
-                    <i class="fa-solid fa-user-gear text-xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white">Profil Pelajar</h3>
-                    <p class="text-xs text-slate-400">Masukkan nama anda untuk mula belajar & menyimpan keputusan.</p>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400">
+            <p>© 2026 EduMind Blog Pembelajaran Interaktif. Semua Hak Cipta Dipelihara.</p>
+            <p class="mt-1">Disimpan secara automatik pada peranti tempatan / awan.</p>
+        </div>
+    </footer>
 
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Penuh Pelajar:</label>
-                <input type="text" id="modalNameInput" placeholder="Contoh: Muhammad Ali bin Ahmad"
-                    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm">
+    <!-- MODAL 1: Onboarding / Name Input Modal (Shows first time open) -->
+    <div id="onboardingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-700 text-center transform transition-all scale-100 animate-fade-in">
+            <div class="w-16 h-16 bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-2xl text-white flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-blue-500/30">
+                <i class="fa-solid fa-user-graduate"></i>
             </div>
+            
+            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Selamat Datang ke EduMind!</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                Sila masukkan nama anda untuk memulakan kembara pembelajaran. Nama anda akan disimpan secara automatik supaya anda tidak perlu memasukkannya lagi.
+            </p>
 
-            <div class="flex justify-end gap-2 pt-2">
-                <button onclick="saveUserName()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition">
-                    Simpan & Teruskan
+            <form onsubmit="handleSaveName(event)" class="mt-6 space-y-4">
+                <div class="text-left">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nama / Panggilan Anda:</label>
+                    <input type="text" id="inputModalUserName" required placeholder="Contoh: Ahmad / Siti" 
+                        class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-medium text-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-500/30 transition active:scale-95">
+                    Mula Belajar Sekarang <i class="fa-solid fa-arrow-right ml-1"></i>
                 </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Read Full Article Modal -->
+    <div id="readModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-start bg-slate-50/50 dark:bg-slate-800/50">
+                <div>
+                    <span id="readCategoryBadge" class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300"></span>
+                    <h2 id="readTitle" class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mt-2"></h2>
+                    <p id="readMeta" class="text-xs text-slate-400 mt-1"></p>
+                </div>
+                <button onclick="closeReadModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed" id="readBody">
+                <!-- Detailed content dynamically loaded -->
+            </div>
+
+            <!-- Article Quiz Section inside modal -->
+            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700">
+                <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question text-blue-500"></i> Kuiz Ujian Kefahaman (+20 XP)
+                </h4>
+                <p id="articleQuizQuestion" class="text-xs text-slate-600 dark:text-slate-400 mb-3"></p>
+                <div id="articleQuizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                <div id="articleQuizFeedback" class="mt-3 text-xs font-semibold hidden"></div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase Imports -->
+    <!-- MODAL 3: Create New Note / Post Modal -->
+    <div id="createModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-100 dark:border-slate-700">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-nib text-blue-600"></i> Cipta Nota Pembelajaran Baru
+                </h3>
+                <button onclick="closeCreateModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleCreatePost(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Tajuk Nota:</label>
+                    <input type="text" id="newPostTitle" required placeholder="Contoh: 5 Teknik Memori Pantas"
+                        class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Kategori / Subjek:</label>
+                    <select id="newPostCategory" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Sains">🧪 Sains</option>
+                        <option value="Matematik">📐 Matematik</option>
+                        <option value="Sejarah">📜 Sejarah</option>
+                        <option value="Teknologi">💻 Teknologi</option>
+                        <option value="Tips Belajar">💡 Tips Belajar</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Kandungan Ringkas (Prakertas):</label>
+                    <textarea id="newPostSummary" rows="2" required placeholder="Ringkasan atau poin utama..."
+                        class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-sm outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Kandungan Penuh Nota:</label>
+                    <textarea id="newPostContent" rows="4" required placeholder="Tulis penjelasannya di sini..."
+                        class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-sm outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" onclick="closeCreateModal()" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md">Terbitkan Nota</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast Message -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 px-4 py-3 bg-slate-900 text-white rounded-2xl shadow-xl flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 border border-slate-700 text-xs font-medium">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-green-400 text-base"></i>
+        <span id="toastMessage">Mesej pemberitahuan</span>
+    </div>
+
+    <!-- Firebase Modules & JS Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'boolean-logic-hub';
+        // Firebase Configuration setup
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'edu-blog-app';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
             apiKey: "demo-api-key",
             authDomain: "demo-app.firebaseapp.com",
             projectId: "demo-app",
             storageBucket: "demo-app.appspot.com",
             messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
+            appId: "1:123456789:web:demo"
         };
 
         let app, auth, db;
         let currentUser = null;
+        let userId = null;
 
-        // Application State
-        window.userData = {
-            nama: "Pelajar Baru",
-            scores: { 1: 0 },
-            answers: { 1: {} }
+        // Global State Variables
+        window.state = {
+            userName: '',
+            xp: 120,
+            streak: 1,
+            readCount: 0,
+            activeCategory: 'Semua',
+            searchQuery: '',
+            savedPostIds: [],
+            likedPostIds: [],
+            articles: [
+                {
+                    id: '1',
+                    title: 'Memahami Fotosintesis: Bagaimana Tumbuhan Menghasilkan Makanan',
+                    category: 'Sains',
+                    author: 'Cikgu Sarah',
+                    date: '20 Ogos 2026',
+                    readTime: '3 min bacaan',
+                    summary: 'Fotosintesis ialah proses penting di mana tumbuhan hijau menggunakan cahaya matahari, air, dan karbon dioksida untuk menghasilkan glukosa dan oksigen.',
+                    content: `Fotosintesis adalah proses asas kehidupan di Bumi. Tanpa fotosintesis, bekalan oksigen di atmosfera akan menyusut dan rantaian makanan akan terputus.<br><br>
+                    <strong>Persamaan Fotosintesis:</strong><br>
+                    <code>Karbon Dioksida + Air + Cahaya Matahari ➔ Glukosa + Oksigen</code><br><br>
+                    Tumbuhan menyerap air melalui akar dan karbon dioksida melalui stoma pada daun. Pigmen klorofil pada kloroplas kemudiannya menangkap tenaga cahaya matahari untuk memacu tindak balas kimia ini.`,
+                    likes: 18,
+                    quiz: {
+                        question: "Apakah pigmen hijau yang menangkap cahaya matahari semasa fotosintesis?",
+                        options: ["Klorofil", "Hemoglobin", "Karoten", "Stoma"],
+                        correct: 0
+                    }
+                },
+                {
+                    id: '2',
+                    title: 'Teknik Pomodoro: Cara Belajar Fokus Tanpa Rasa Penat',
+                    category: 'Tips Belajar',
+                    author: 'Pakar Pembelajaran',
+                    date: '18 Ogos 2026',
+                    readTime: '4 min bacaan',
+                    summary: 'Teknik Pomodoro membahagikan masa belajar kepada blok 25 minit dengan rehat 5 minit untuk kekal fokus dan mengelakkan keletihan mental.',
+                    content: `Adakah anda sering berasa bosan atau hilang fokus ketika belajar? Teknik Pomodoro ciptaan Francesco Cirillo boleh membantu anda!<br><br>
+                    <strong>Langkah-langkah Utama:</strong><br>
+                    1. Pilih satu topik pembelajaran.<br>
+                    2. Tetapkan pemasa selama 25 minit (1 Pomodoro).<br>
+                    3. Belajar secara fokus tanpa gangguan gajet.<br>
+                    4. Apabila pemasa berbunyi, rehat selama 5 minit.<br>
+                    5. Ulangi 4 kali, kemudian ambil rehat panjang (15–30 minit).`,
+                    likes: 32,
+                    quiz: {
+                        question: "Berapakah durasi masa fokus standard dalam satu sesi Pomodoro?",
+                        options: ["15 Minit", "25 Minit", "45 Minit", "60 Minit"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: '3',
+                    title: 'Pengenalan Algoritma & Pemikiran Komputasional',
+                    category: 'Teknologi',
+                    author: 'Dr. Nizam',
+                    date: '15 Ogos 2026',
+                    readTime: '5 min bacaan',
+                    summary: 'Algoritma ialah siri langkah demi langkah untuk menyelesaikan sesuatu masalah secara sistematik dalam dunia pengaturcaraan.',
+                    content: `Sama ada anda sedang menyusun resipi masakan atau menulis kod Python, anda sebenarnya sedang menggunakan algoritma!<br><br>
+                    4 Teras Pemikiran Komputasional:<br>
+                    - <strong>Leraian (Decomposition):</strong> Memecahkan masalah besar kepada bahagian kecil.<br>
+                    - <strong>Pengecaman Corak:</strong> Mencari kesamaan dalam masalah.<br>
+                    - <strong>Peniskalaan (Abstraction):</strong> Memfokuskan maklumat penting sahaja.<br>
+                    - <strong>Algoritma:</strong> Membina langkah penyelesaian tersusun.`,
+                    likes: 24,
+                    quiz: {
+                        question: "Apakah proses memecahkan masalah besar kepada bahagian-bahagian kecil?",
+                        options: ["Leraian (Decomposition)", "Peniskalaan", "Kod", "Rangkaian"],
+                        correct: 0
+                    }
+                },
+                {
+                    id: '4',
+                    title: 'Kisah Penubuhan Kesultanan Melayu Melaka',
+                    category: 'Sejarah',
+                    author: 'Cikgu Amir',
+                    date: '12 Ogos 2026',
+                    readTime: '4 min bacaan',
+                    summary: 'Sejarah pembukaan Melaka oleh Parameswara di muara sungai yang berstrategik, menyaksikan peristiwa pelanduk putih menendang anjing buruan.',
+                    content: `Menurut Sejarah Melayu, Parameswara telah mengasaskan Melaka sekitar tahun 1400. Baginda tertarik dengan peristiwa seekor pelanduk putih yang menendang anjing buruannya ke dalam sungai di bawah pokok Melaka.<br><br>
+                    Keunggulan Melaka sebagai pusat perdagangan dunia berpunca daripada lokasinya yang terlindung daripada angin monsun serta pentadbiran pelabuhan yang cekap.`,
+                    likes: 29,
+                    quiz: {
+                        question: "Siapakah pengasas Kesultanan Melayu Melaka?",
+                        options: ["Hang Tuah", "Parameswara", "Sultan Muzaffar Shah", "Tun Perak"],
+                        correct: 1
+                    }
+                }
+            ]
         };
 
+        // Initialize Firebase App
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
 
-            // Auth Handling
-            const initAuth = async () => {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            };
-            initAuth().catch(err => console.debug("Auth fallback silent:", err));
-
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    currentUser = user;
-                    await loadUserProfile();
-                }
-            });
-        } catch (err) {
-            console.debug("Firebase init fallback:", err);
-        }
-
-        // Firestore Storage Functions
-        async function saveUserDataToCloud() {
-            if (!currentUser || !db) return;
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'profile', 'data');
-                await setDoc(userDocRef, {
-                    nama: window.userData.nama,
-                    scores: window.userData.scores,
-                    lastUpdated: new Date().toISOString()
-                }, { merge: true });
-            } catch (err) {
-                console.debug("Error saving user data:", err);
+            // Authenticate user
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
             }
+        } catch (e) {
+            console.warn("Firebase fallback initialisation:", e);
         }
 
-        async function loadUserProfile() {
-            if (!currentUser || !db) return;
-            try {
-                const userDocRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'profile', 'data');
-                const docSnap = await getDoc(userDocRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.nama) window.userData.nama = data.nama;
-                    if (data.scores) window.userData.scores = data.scores;
-                    updateUIHeader();
-                    updateExerciseBadges();
-                } else {
-                    // Open name modal if new
-                    openNameModal();
-                }
-            } catch (err) {
-                console.debug("Error loading profile:", err);
+        // Auth Listener & User Data Initialization
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                userId = user.uid;
+                await loadUserProfile();
+                listenToCustomPosts();
+            } else {
+                // Default fallback if offline/no auth
+                checkLocalOrPromptName();
             }
-        }
-
-        window.saveUserDataToCloud = saveUserDataToCloud;
-    </script>
-
-    <!-- Main Logic Script -->
-    <script>
-        const GATES_DATA = [
-            {
-                id: 'and',
-                name: 'Gerbang AND',
-                expr: 'Y = A . B',
-                desc: 'Keluaran Y = 1 HANYA APABILA kedua-dua masukan A dan B bernilai 1.',
-                inputs: ['A', 'B'],
-                eval: (a, b) => a && b ? 1 : 0,
-                table: [
-                    {a:0, b:0, y:0}, {a:0, b:1, y:0},
-                    {a:1, b:0, y:0}, {a:1, b:1, y:1}
-                ]
-            },
-            {
-                id: 'or',
-                name: 'Gerbang OR',
-                expr: 'Y = A + B',
-                desc: 'Keluaran Y = 1 sekiranya MANA-MANA masukan A atau B bernilai 1.',
-                inputs: ['A', 'B'],
-                eval: (a, b) => a || b ? 1 : 0,
-                table: [
-                    {a:0, b:0, y:0}, {a:0, b:1, y:1},
-                    {a:1, b:0, y:1}, {a:1, b:1, y:1}
-                ]
-            },
-            {
-                id: 'not',
-                name: 'Gerbang NOT (Inverter)',
-                expr: 'Y = A\'',
-                desc: 'Menterbalikkan nilai masukan. Jika A = 0, Y = 1; Jika A = 1, Y = 0.',
-                inputs: ['A'],
-                eval: (a) => a ? 0 : 1,
-                table: [
-                    {a:0, y:1}, {a:1, y:0}
-                ]
-            },
-            {
-                id: 'nand',
-                name: 'Gerbang NAND',
-                expr: 'Y = (A . B)\'',
-                desc: 'Pelengkap kepada AND. Y = 0 HANYA APABILA A dan B kedua-duanya 1.',
-                inputs: ['A', 'B'],
-                eval: (a, b) => !(a && b) ? 1 : 0,
-                table: [
-                    {a:0, b:0, y:1}, {a:0, b:1, y:1},
-                    {a:1, b:0, y:1}, {a:1, b:1, y:0}
-                ]
-            },
-            {
-                id: 'nor',
-                name: 'Gerbang NOR',
-                expr: 'Y = (A + B)\'',
-                desc: 'Pelengkap kepada OR. Y = 1 HANYA APABILA A dan B kedua-duanya 0.',
-                inputs: ['A', 'B'],
-                eval: (a, b) => !(a || b) ? 1 : 0,
-                table: [
-                    {a:0, b:0, y:1}, {a:0, b:1, y:0},
-                    {a:1, b:0, y:0}, {a:1, b:1, y:0}
-                ]
-            },
-            {
-                id: 'xor',
-                name: 'Gerbang XOR (Exclusive-OR)',
-                expr: 'Y = A ⊕ B',
-                desc: 'Keluaran Y = 1 HANYA APABILA nilai masukan A dan B berbeza.',
-                inputs: ['A', 'B'],
-                eval: (a, b) => (a !== b) ? 1 : 0,
-                table: [
-                    {a:0, b:0, y:0}, {a:0, b:1, y:1},
-                    {a:1, b:0, y:1}, {a:1, b:1, y:0}
-                ]
-            }
-        ];
-
-        // Gate state tracking
-        const gateInputsState = {
-            and: [0, 0],
-            or: [0, 0],
-            not: [0],
-            nand: [0, 0],
-            nor: [0, 0],
-            xor: [0, 0]
-        };
-
-        function renderGateCards() {
-            const container = document.getElementById('gatesGrid');
-            container.innerHTML = '';
-
-            GATES_DATA.forEach(gate => {
-                const inputs = gateInputsState[gate.id];
-                const output = gate.eval(...inputs);
-
-                let switchesHtml = gate.inputs.map((inpName, idx) => `
-                    <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                        <span class="text-xs font-bold text-slate-300">Input ${inpName}</span>
-                        <button onclick="toggleGateInput('${gate.id}', ${idx})" 
-                            class="px-3 py-1 rounded-lg font-mono text-xs font-bold transition flex items-center gap-1.5 ${inputs[idx] ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' : 'bg-slate-800 text-slate-400 border border-slate-700'}">
-                            <span>${inputs[idx] ? 'HIGH (1)' : 'LOW (0)'}</span>
-                            <i class="fa-solid ${inputs[idx] ? 'fa-toggle-on text-emerald-400' : 'fa-toggle-off text-slate-500'}"></i>
-                        </button>
-                    </div>
-                `).join('');
-
-                let tableRows = gate.table.map(row => {
-                    const isCurrent = gate.inputs.length === 2 
-                        ? (row.a === inputs[0] && row.b === inputs[1])
-                        : (row.a === inputs[0]);
-                    return `
-                        <tr class="${isCurrent ? 'bg-sky-900/40 font-bold text-sky-300' : 'text-slate-400'} border-b border-slate-800/60">
-                            <td class="py-1 px-2 text-center">${row.a}</td>
-                            ${gate.inputs.length === 2 ? `<td class="py-1 px-2 text-center">${row.b}</td>` : ''}
-                            <td class="py-1 px-2 text-center ${row.y ? 'text-emerald-400 font-semibold' : ''}">${row.y}</td>
-                        </tr>
-                    `;
-                }).join('');
-
-                container.innerHTML += `
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg gate-card transition flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h3 class="font-bold text-slate-100 text-base">${gate.name}</h3>
-                                    <span class="text-xs font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">${gate.expr}</span>
-                                </div>
-                                <div class="w-10 h-10 rounded-xl ${output ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-lg shadow-emerald-500/20' : 'bg-slate-800 text-slate-500'} flex items-center justify-center transition-all">
-                                    <i class="fa-solid fa-lightbulb text-lg ${output ? 'animate-pulse' : ''}"></i>
-                                </div>
-                            </div>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">${gate.desc}</p>
-
-                            <!-- Switches -->
-                            <div class="space-y-2 mb-4">
-                                ${switchesHtml}
-                            </div>
-                        </div>
-
-                        <!-- Mini Truth Table -->
-                        <div class="mt-2 pt-3 border-t border-slate-800">
-                            <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1">Jadual Kebenaran</span>
-                            <table class="w-full text-xs font-mono">
-                                <thead>
-                                    <tr class="text-slate-400 border-b border-slate-800">
-                                        <th class="py-1">A</th>
-                                        ${gate.inputs.length === 2 ? '<th class="py-1">B</th>' : ''}
-                                        <th class="py-1">Y</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${tableRows}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function toggleGateInput(gateId, inputIndex) {
-            gateInputsState[gateId][inputIndex] = gateInputsState[gateId][inputIndex] ? 0 : 1;
-            renderGateCards();
-        }
-
-        let circuitInputs = { A: 1, B: 0, C: 1 };
-
-        function renderCircuitVisualizer() {
-            const presetKey = document.getElementById('circuitPreset').value;
-            const container = document.getElementById('circuitVisualizer');
-            const titleEl = document.getElementById('circuitTitle');
-            const exprEl = document.getElementById('circuitExpr');
-
-            if (presetKey === 'preset1') {
-                titleEl.textContent = 'Litar Preset 1: Gabungan AND & OR';
-                exprEl.textContent = 'Y = (A . B) + C';
-
-                const andOut = circuitInputs.A && circuitInputs.B ? 1 : 0;
-                const finalOut = andOut || circuitInputs.C ? 1 : 0;
-
-                container.innerHTML = `
-                    <!-- Inputs Column -->
-                    <div class="flex flex-col gap-4">
-                        ${renderInputSwitch('A', circuitInputs.A)}
-                        ${renderInputSwitch('B', circuitInputs.B)}
-                        ${renderInputSwitch('C', circuitInputs.C)}
-                    </div>
-
-                    <!-- Gate Level 1 -->
-                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
-                        <span class="text-xs font-bold text-sky-400 mb-1">Gerbang AND</span>
-                        <div class="text-xs font-mono text-slate-300">Outputs: ${andOut}</div>
-                    </div>
-
-                    <!-- Gate Level 2 -->
-                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
-                        <span class="text-xs font-bold text-indigo-400 mb-1">Gerbang OR</span>
-                        <div class="text-xs font-mono text-slate-300">Combines AND + C</div>
-                    </div>
-
-                    <!-- Output Bulb -->
-                    <div class="flex flex-col items-center gap-2">
-                        <div class="w-14 h-14 rounded-2xl ${finalOut ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500 shadow-xl shadow-emerald-500/30' : 'bg-slate-900 border border-slate-800 text-slate-600'} flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-lightbulb text-2xl"></i>
-                        </div>
-                        <span class="text-xs font-mono font-bold ${finalOut ? 'text-emerald-400' : 'text-slate-500'}">Y = ${finalOut}</span>
-                    </div>
-                `;
-            } else if (presetKey === 'preset2') {
-                titleEl.textContent = 'Litar Preset 2: Gerbang NOR & AND';
-                exprEl.textContent = 'Y = NOT(A + B) . C';
-
-                const norOut = !(circuitInputs.A || circuitInputs.B) ? 1 : 0;
-                const finalOut = norOut && circuitInputs.C ? 1 : 0;
-
-                container.innerHTML = `
-                    <div class="flex flex-col gap-4">
-                        ${renderInputSwitch('A', circuitInputs.A)}
-                        ${renderInputSwitch('B', circuitInputs.B)}
-                        ${renderInputSwitch('C', circuitInputs.C)}
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
-                        <span class="text-xs font-bold text-rose-400 mb-1">Gerbang NOR</span>
-                        <div class="text-xs font-mono text-slate-300">Out: ${norOut}</div>
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-xl my-2">
-                        <span class="text-xs font-bold text-sky-400 mb-1">Gerbang AND</span>
-                        <div class="text-xs font-mono text-slate-300">NOR + C</div>
-                    </div>
-                    <div class="flex flex-col items-center gap-2">
-                        <div class="w-14 h-14 rounded-2xl ${finalOut ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500 shadow-xl shadow-emerald-500/30' : 'bg-slate-900 border border-slate-800 text-slate-600'} flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-lightbulb text-2xl"></i>
-                        </div>
-                        <span class="text-xs font-mono font-bold ${finalOut ? 'text-emerald-400' : 'text-slate-500'}">Y = ${finalOut}</span>
-                    </div>
-                `;
-            } else if (presetKey === 'preset3') {
-                titleEl.textContent = 'Litar Preset 3: Penambah Separuh (Half Adder)';
-                exprEl.textContent = 'Sum = A ⊕ B , Carry = A . B';
-
-                const sumOut = circuitInputs.A !== circuitInputs.B ? 1 : 0;
-                const carryOut = circuitInputs.A && circuitInputs.B ? 1 : 0;
-
-                container.innerHTML = `
-                    <div class="flex flex-col gap-4">
-                        ${renderInputSwitch('A', circuitInputs.A)}
-                        ${renderInputSwitch('B', circuitInputs.B)}
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl">
-                            <span class="text-xs font-bold text-amber-400 block">XOR Gate (Sum)</span>
-                            <span class="text-xs font-mono text-slate-300">Val: ${sumOut}</span>
-                        </div>
-                        <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl">
-                            <span class="text-xs font-bold text-sky-400 block">AND Gate (Carry)</span>
-                            <span class="text-xs font-mono text-slate-300">Val: ${carryOut}</span>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center gap-3 bg-slate-900 p-2 rounded-xl border border-slate-800">
-                            <div class="w-10 h-10 rounded-lg ${sumOut ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500' : 'bg-slate-800 text-slate-600'} flex items-center justify-center">
-                                <i class="fa-solid fa-lightbulb"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-bold text-slate-300 block">Hasil Tambah (Sum)</span>
-                                <span class="text-xs font-mono font-bold ${sumOut ? 'text-emerald-400' : 'text-slate-500'}">${sumOut}</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 bg-slate-900 p-2 rounded-xl border border-slate-800">
-                            <div class="w-10 h-10 rounded-lg ${carryOut ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500' : 'bg-slate-800 text-slate-600'} flex items-center justify-center">
-                                <i class="fa-solid fa-lightbulb"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-bold text-slate-300 block">Bawa (Carry Out)</span>
-                                <span class="text-xs font-mono font-bold ${carryOut ? 'text-emerald-400' : 'text-slate-500'}">${carryOut}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        function renderInputSwitch(label, value) {
-            return `
-                <div class="flex items-center gap-3 bg-slate-900 px-4 py-2 rounded-xl border border-slate-800">
-                    <span class="text-xs font-bold text-slate-200">Akar ${label}:</span>
-                    <button onclick="toggleCircuitInput('${label}')" 
-                        class="px-3 py-1 rounded-lg text-xs font-mono font-bold transition flex items-center gap-2 ${value ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' : 'bg-slate-800 text-slate-400 border border-slate-700'}">
-                        <span>${value ? 'HIGH (1)' : 'LOW (0)'}</span>
-                        <i class="fa-solid ${value ? 'fa-toggle-on text-emerald-400' : 'fa-toggle-off text-slate-500'}"></i>
-                    </button>
-                </div>
-            `;
-        }
-
-        function toggleCircuitInput(label) {
-            circuitInputs[label] = circuitInputs[label] ? 0 : 1;
-            renderCircuitVisualizer();
-        }
-
-        function loadCircuitPreset() {
-            renderCircuitVisualizer();
-        }
-
-        const EXERCISES_DATA = {
-            1: {
-                title: 'Latihan Logik Boolean (10 Soalan)',
-                desc: 'Uji kefahaman menyeluruh merangkumi gerbang logik, jadual kebenaran, ungkapan Boolean, dan teorem algebra.',
-                questions: [
-                    {
-                        q: '1. Apakah keluaran gerbang AND jika input A = 1 dan input B = 0?',
-                        options: ['0', '1', '2', 'Tidak pasti'],
-                        correct: 0,
-                        exp: 'Gerbang AND hanya menghasilkan 1 jika KEDUA-DUA input bernilai 1.'
-                    },
-                    {
-                        q: '2. Manakah gerbang logik yang menghasilkan keluaran 1 apabila kedua-dua input bernilai 0?',
-                        options: ['AND', 'OR', 'NOR', 'XOR'],
-                        correct: 2,
-                        exp: 'NOR adalah pelengkap kepada OR. Untuk input (0,0), OR = 0, maka NOR = 1.'
-                    },
-                    {
-                        q: '3. Gerbang NOT dikenali juga sebagai:',
-                        options: ['Amplifier', 'Inverter (Penterbalik)', 'Multiplexer', 'Adder'],
-                        correct: 1,
-                        exp: 'Gerbang NOT membalikkan bit input (0 menjadi 1, 1 menjadi 0).'
-                    },
-                    {
-                        q: '4. Apakah simbol ungkapan Boolean untuk operasi OR?',
-                        options: ['Tambah (+)', 'Darab (.)', 'Bar (\')', 'Eksklusif (⊕)'],
-                        correct: 0,
-                        exp: 'Operasi OR diwakili oleh simbol penambahan (+).'
-                    },
-                    {
-                        q: '5. Diberi Y = A . B + C. Jika A = 1, B = 0, C = 1, apakah nilai Y?',
-                        options: ['0', '1'],
-                        correct: 1,
-                        exp: 'A.B = 1.0 = 0. Kemudian Y = 0 + C = 0 + 1 = 1.'
-                    },
-                    {
-                        q: '6. Diberi Y = (A + B)\'. Jika A = 0 dan B = 0, apakah nilai Y?',
-                        options: ['0', '1'],
-                        correct: 1,
-                        exp: 'A + B = 0 + 0 = 0. Pelengkap (0)\' = 1.'
-                    },
-                    {
-                        q: '7. Mengikut Hukum De Morgan, ungkapan (A . B)\' adalah bersamaan dengan:',
-                        options: ['A\' . B\'', 'A\' + B\'', 'A + B', 'A . B'],
-                        correct: 1,
-                        exp: 'Hukum De Morgan Pertama menyatakan (A . B)\' = A\' + B\'.'
-                    },
-                    {
-                        q: '8. Permudahkan ungkapan Boolean berikut: A + 0 = ?',
-                        options: ['0', '1', 'A', 'A\''],
-                        correct: 2,
-                        exp: 'Hukum Identiti: Sebarang pembolehubah di-OR bersama 0 mengekalkan nilainya (A).'
-                    },
-                    {
-                        q: '9. Sebuah penggera rumah berbunyi (Y=1) jika Suis Keselamatan dihidupkan (S=1) DAN Pengesan Gerakan mengesan penceroboh (M=1). Ungkapan Boolean bagi litar ini ialah:',
-                        options: ['Y = S + M', 'Y = S . M', 'Y = (S . M)\'', 'Y = S ⊕ M'],
-                        correct: 1,
-                        exp: 'Syarat "DAN" memerlukan gerbang AND: Y = S . M.'
-                    },
-                    {
-                        q: '10. Gerbang manakah yang dikenali sebagai Universal Gate kerana boleh membina sebarang litar logik lain?',
-                        options: ['AND dan OR', 'NAND dan NOR', 'XOR dan XNOR', 'NOT dan AND'],
-                        correct: 1,
-                        exp: 'NAND dan NOR dikenali sebagai Universal Gates.'
-                    }
-                ]
-            }
-        };
-
-        let currentActiveEx = 1;
-
-        function selectExercise(exId) {
-            currentActiveEx = 1;
-            renderExerciseContent(1);
-        }
-
-        function renderExerciseContent(exId) {
-            const data = EXERCISES_DATA[1];
-            const container = document.getElementById('exerciseContainer');
-            const userAns = window.userData.answers[1] || {};
-
-            let questionsHtml = data.questions.map((q, qIdx) => {
-                const selected = userAns[qIdx];
-                const isAnswered = selected !== undefined;
-                const isCorrect = isAnswered && selected === q.correct;
-
-                let optionsHtml = q.options.map((opt, optIdx) => {
-                    let optStyle = "bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700";
-                    if (isAnswered) {
-                        if (optIdx === q.correct) {
-                            optStyle = "bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold";
-                        } else if (optIdx === selected) {
-                            optStyle = "bg-rose-950/80 border-rose-500 text-rose-300 font-bold";
-                        }
-                    }
-
-                    return `
-                        <button onclick="answerQuestion(1, ${qIdx}, ${optIdx})" 
-                            ${isAnswered ? 'disabled' : ''}
-                            class="w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition flex items-center justify-between ${optStyle}">
-                            <span>${String.fromCharCode(65 + optIdx)}. ${opt}</span>
-                            ${isAnswered && optIdx === q.correct ? '<i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>' : ''}
-                            ${isAnswered && optIdx === selected && optIdx !== q.correct ? '<i class="fa-solid fa-circle-xmark text-rose-400 text-base"></i>' : ''}
-                        </button>
-                    `;
-                }).join('');
-
-                return `
-                    <div class="bg-slate-950/60 border border-slate-800 p-5 rounded-2xl space-y-3">
-                        <p class="font-semibold text-slate-100 text-sm sm:text-base leading-relaxed">${q.q}</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                            ${optionsHtml}
-                        </div>
-                        ${isAnswered ? `
-                            <div class="mt-3 p-3 rounded-xl ${isCorrect ? 'bg-emerald-950/40 border border-emerald-800/60 text-emerald-300' : 'bg-amber-950/40 border border-amber-800/60 text-amber-300'} text-xs leading-relaxed">
-                                <strong>${isCorrect ? 'Tahniah! Jawapan Tepat.' : 'Penjelasan Jawapan:'}</strong> ${q.exp}
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-            }).join('');
-
-            const score = window.userData.scores[1] || 0;
-
-            container.innerHTML = `
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4 mb-6">
-                    <div>
-                        <h3 class="text-lg font-bold text-white">${data.title}</h3>
-                        <p class="text-xs text-slate-400">${data.desc}</p>
-                    </div>
-                    <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl flex items-center gap-3">
-                        <span class="text-xs text-slate-400 font-medium">Markah:</span>
-                        <span class="text-base font-bold text-amber-400 font-mono">${score} / 10</span>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    ${questionsHtml}
-                </div>
-
-                <div class="mt-8 pt-4 border-t border-slate-800 flex justify-between items-center">
-                    <button onclick="resetExercise(1)" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate-left"></i> Jawab Semula Latihan Ini
-                    </button>
-                    <button onclick="switchTab('sheets')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-2">
-                        <span>Hantar Markah ke Google Sheet</span>
-                        <i class="fa-solid fa-file-excel"></i>
-                    </button>
-                </div>
-            `;
-        }
-
-        function answerQuestion(exId, qIdx, optIdx) {
-            if (!window.userData.answers[1]) window.userData.answers[1] = {};
-            window.userData.answers[1][qIdx] = optIdx;
-
-            // Recalculate score
-            const exData = EXERCISES_DATA[1];
-            let currentScore = 0;
-            Object.keys(window.userData.answers[1]).forEach(index => {
-                if (window.userData.answers[1][index] === exData.questions[index].correct) {
-                    currentScore++;
-                }
-            });
-
-            window.userData.scores[1] = currentScore;
-
-            // Save state
-            if (window.saveUserDataToCloud) window.saveUserDataToCloud();
-
-            updateUIHeader();
-            updateExerciseBadges();
-            renderExerciseContent(1);
-        }
-
-        function resetExercise(exId) {
-            window.userData.answers[1] = {};
-            window.userData.scores[1] = 0;
-            if (window.saveUserDataToCloud) window.saveUserDataToCloud();
-            updateUIHeader();
-            updateExerciseBadges();
-            renderExerciseContent(1);
-        }
-
-        function updateExerciseBadges() {
-            const score = window.userData.scores[1] || 0;
-            const badge = document.getElementById('badge-ex-1');
-            if (badge) badge.textContent = `${score} / 10`;
-
-            const summaryScore = document.getElementById('summary-score-1');
-            if (summaryScore) summaryScore.textContent = `${score}/10`;
-        }
-
-        function updateUIHeader() {
-            document.getElementById('headerUserName').textContent = window.userData.nama || "Pelajar Baru";
-
-            const score = window.userData.scores[1] || 0;
-            const overallPercentage = Math.round((score / 10) * 100);
-
-            document.getElementById('headerTotalScore').textContent = `${overallPercentage}%`;
-            document.getElementById('summary-total').textContent = `${overallPercentage}%`;
-        }
-
-        function openNameModal() {
-            document.getElementById('modalNameInput').value = window.userData.nama !== "Pelajar Baru" ? window.userData.nama : "";
-            document.getElementById('nameModal').classList.remove('hidden');
-        }
-
-        function saveUserName() {
-            const inputVal = document.getElementById('modalNameInput').value.trim();
-            if (inputVal) {
-                window.userData.nama = inputVal;
-                updateUIHeader();
-                if (window.saveUserDataToCloud) window.saveUserDataToCloud();
-                document.getElementById('nameModal').classList.add('hidden');
-            }
-        }
-
-        function switchTab(tabId) {
-            ['learn', 'simulator', 'exercises', 'sheets'].forEach(t => {
-                document.getElementById(`section-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).classList.remove('active');
-            });
-
-            document.getElementById(`section-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-
-            if (tabId === 'exercises') {
-                renderExerciseContent(1);
-            }
-        }
-
-        function toggleSetupGuide() {
-            const guide = document.getElementById('setupGuide');
-            guide.classList.toggle('hidden');
-        }
-
-        const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbwoCYda3WY7axvplQUCiyxzJHSJkUTAr3skml6r665nF_dIpO0oGRQLFLfyVg3MGQ9n/exec";
-
-
-async function submitToGoogleSheet() {
-
-    const btn = document.getElementById('btnSubmitSheet');
-    const msgBox = document.getElementById('submitStatusMsg');
-
-    // Kira jumlah markah
-    let totalMarks = 0;
-
-    for (let i = 1; i <= 5; i++) {
-        totalMarks += (window.userData.scores[i] || 0);
-    }
-
-    // 5 latihan × 5 markah = 25
-    const overallPercentage =
-      //  Math.round((totalMarks / 25) * 100);
-        Math.round((totalMarks);
-    // Hanya hantar NAMA dan SKOR
-    const payload = {
-        nama: window.userData.nama,
-        skor: overallPercentage
-    };
-
-    btn.disabled = true;
-
-    btn.innerHTML =
-        `<i class="fa-solid fa-spinner animate-spin"></i> Menghantar Data...`;
-
-    try {
-
-        await fetch(GOOGLE_SCRIPT_URL, {
-
-            method: 'POST',
-
-            mode: 'no-cors',
-
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-
-            body: JSON.stringify(payload)
-
         });
 
-        msgBox.className =
-            "p-3 rounded-xl text-xs font-medium bg-emerald-950 border border-emerald-800 text-emerald-300 block";
+        // Load User Profile from Firestore
+        async function loadUserProfile() {
+            if (!userId || !db) {
+                checkLocalOrPromptName();
+                return;
+            }
 
-        msgBox.innerHTML =
-            `<i class="fa-solid fa-circle-check"></i>
-             Markah ${window.userData.nama}
-             (${overallPercentage}%)
-             berjaya dihantar ke Google Sheet!`;
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'userProfile');
+                const userSnap = await getDoc(userDocRef);
 
-    } catch (err) {
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    if (data.name) {
+                        window.state.userName = data.name;
+                        window.state.xp = data.xp || 120;
+                        window.state.streak = data.streak || 1;
+                        window.state.readCount = data.readCount || 0;
+                        window.state.savedPostIds = data.savedPostIds || [];
+                        window.state.likedPostIds = data.likedPostIds || [];
+                        
+                        updateUserUI();
+                    } else {
+                        showOnboardingModal();
+                    }
+                } else {
+                    // Check local memory as fallback or prompt modal
+                    showOnboardingModal();
+                }
+            } catch (err) {
+                console.error("Error loading profile:", err);
+                showOnboardingModal();
+            }
+        }
 
-        console.error(err);
+        // Listen for Public Custom Posts added by users
+        function listenToCustomPosts() {
+            if (!db) return;
+            try {
+                const postsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'blog_posts');
+                onSnapshot(postsColRef, (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === "added") {
+                            const newPost = { id: change.doc.id, ...change.doc.data() };
+                            // Add if not already present
+                            if (!window.state.articles.some(a => a.id === newPost.id)) {
+                                window.state.articles.unshift(newPost);
+                            }
+                        }
+                    });
+                    renderArticles();
+                }, (error) => {
+                    console.error("Error listening to posts:", error);
+                });
+            } catch (err) {
+                console.error("Posts listener setup error:", err);
+            }
+        }
 
-        msgBox.className =
-            "p-3 rounded-xl text-xs font-medium bg-rose-950 border border-rose-800 text-rose-300 block";
+        // Save User Name & Data to Firestore & Local UI
+        window.saveUserProfileToDb = async function(name) {
+            window.state.userName = name;
+            updateUserUI();
 
-        msgBox.innerHTML =
-            `<i class="fa-solid fa-triangle-exclamation"></i>
-             Ralat menghantar data.`;
+            if (userId && db) {
+                try {
+                    const userDocRef = doc(db, 'artifacts', appId, 'users', userId, 'profile', 'userProfile');
+                    await setDoc(userDocRef, {
+                        name: window.state.userName,
+                        xp: window.state.xp,
+                        streak: window.state.streak,
+                        readCount: window.state.readCount,
+                        savedPostIds: window.state.savedPostIds,
+                        likedPostIds: window.state.likedPostIds,
+                        updatedAt: new Date().toISOString()
+                    }, { merge: true });
+                } catch (e) {
+                    console.error("Failed to save profile:", e);
+                }
+            }
 
-    }
+            showToast(`Selamat datang, ${name}! Profil anda telah disimpan.`);
+        };
 
-    setTimeout(() => {
+        // Update UI elements with state data
+        function updateUserUI() {
+            const name = window.state.userName;
+            if (!name) return;
 
-        btn.disabled = false;
+            const initials = name.charAt(0).toUpperCase();
 
-        btn.innerHTML =
-            `<i class="fa-solid fa-paper-plane"></i>
-             Hantar Markah Sekarang`;
+            document.getElementById('navUserName').innerText = name;
+            document.getElementById('userAvatarInitials').innerText = initials;
+            document.getElementById('userDisplayBadge').classList.remove('hidden');
 
-    }, 1000);
-}
+            document.getElementById('sidebarUserName').innerText = name;
+            document.getElementById('sidebarAvatar').innerText = initials;
 
+            document.getElementById('heroGreeting').innerText = `Selamat Kembali, ${name}! 👋`;
+            document.getElementById('userXp').innerText = `${window.state.xp} XP`;
+            document.getElementById('userStreak').innerText = `${window.state.streak} Hari`;
+            document.getElementById('userReadCount').innerText = `${window.state.readCount} Nota`;
+
+            // Calculate level
+            const level = Math.floor(window.state.xp / 100) + 1;
+            const xpInLevel = window.state.xp % 100;
+            document.getElementById('userLevelText').innerText = `Tahap ${level} (${window.state.xp} XP)`;
+            document.getElementById('xpProgressBar').style.width = `${xpInLevel}%`;
+
+            renderSavedNotes();
+        }
+
+        function showOnboardingModal() {
+            document.getElementById('onboardingModal').classList.remove('hidden');
+        }
+
+        function checkLocalOrPromptName() {
+            if (!window.state.userName) {
+                showOnboardingModal();
+            }
+        }
+
+        // Render Articles Feed
+        window.renderArticles = function() {
+            const container = document.getElementById('articlesContainer');
+            container.innerHTML = '';
+
+            let filtered = window.state.articles.filter(article => {
+                const matchesCat = window.state.activeCategory === 'Semua' || article.category === window.state.activeCategory;
+                const matchesSearch = article.title.toLowerCase().includes(window.state.searchQuery.toLowerCase()) || 
+                                      article.summary.toLowerCase().includes(window.state.searchQuery.toLowerCase()) ||
+                                      article.category.toLowerCase().includes(window.state.searchQuery.toLowerCase());
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('articleCount').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-12 text-center border border-slate-200 dark:border-slate-700">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                        <h4 class="font-bold text-slate-700 dark:text-slate-300">Tiada Nota Dijumpai</h4>
+                        <p class="text-xs text-slate-400 mt-1">Cuba cari tajuk lain atau cipta nota baharu!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(article => {
+                const isSaved = window.state.savedPostIds.includes(article.id);
+                const isLiked = window.state.likedPostIds.includes(article.id);
+
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition group";
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-xs font-bold px-3 py-1 rounded-lg bg-blue-50 dark:bg-slate-700 text-blue-600 dark:text-blue-300 border border-blue-100 dark:border-slate-600">
+                            ${article.category}
+                        </span>
+                        <div class="flex items-center space-x-2 text-xs text-slate-400">
+                            <span><i class="fa-regular fa-clock mr-1"></i>${article.readTime || '3 min'}</span>
+                            <button onclick="toggleBookmark('${article.id}', event)" class="p-1.5 hover:text-blue-600 transition">
+                                <i class="${isSaved ? 'fa-solid text-blue-600' : 'fa-regular'} fa-bookmark text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition cursor-pointer" onclick="openReadModal('${article.id}')">
+                        ${article.title}
+                    </h3>
+
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                        ${article.summary}
+                    </p>
+
+                    <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-7 h-7 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold flex items-center justify-center text-[10px]">
+                                ${article.author.charAt(0)}
+                            </div>
+                            <span class="font-medium text-slate-600 dark:text-slate-300">${article.author}</span>
+                            <span class="text-slate-300 dark:text-slate-600">•</span>
+                            <span class="text-slate-400">${article.date}</span>
+                        </div>
+
+                        <div class="flex items-center space-x-3">
+                            <button onclick="toggleLike('${article.id}', event)" class="flex items-center space-x-1 ${isLiked ? 'text-rose-500 font-bold' : 'text-slate-400 hover:text-rose-500'} transition">
+                                <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                                <span>${article.likes || 0}</span>
+                            </button>
+                            <button onclick="openReadModal('${article.id}')" class="font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                                Baca <i class="fa-solid fa-chevron-right text-[10px] ml-0.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
+
+        // Render Saved Notes in Sidebar
+        function renderSavedNotes() {
+            const container = document.getElementById('savedNotesContainer');
+            const savedBadge = document.getElementById('savedCountBadge');
+            
+            const savedArticles = window.state.articles.filter(a => window.state.savedPostIds.includes(a.id));
+            savedBadge.innerText = savedArticles.length;
+
+            if (savedArticles.length === 0) {
+                container.innerHTML = `<p class="text-slate-400 italic text-center py-4">Tiada nota disimpan lagi. Klik ikon penanda buku pada artikel!</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            savedArticles.forEach(a => {
+                const item = document.createElement('div');
+                item.className = "p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer flex justify-between items-center transition";
+                item.onclick = () => openReadModal(a.id);
+                item.innerHTML = `
+                    <div class="truncate pr-2">
+                        <div class="font-semibold text-slate-700 dark:text-slate-200 truncate">${a.title}</div>
+                        <div class="text-[10px] text-slate-400">${a.category}</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Form Handlers
+        window.handleSaveName = function(e) {
+            e.preventDefault();
+            const inputName = document.getElementById('inputModalUserName').value.trim();
+            if (inputName) {
+                document.getElementById('onboardingModal').classList.add('hidden');
+                window.saveUserProfileToDb(inputName);
+            }
+        };
+
+        window.openEditNameModal = function() {
+            document.getElementById('inputModalUserName').value = window.state.userName || '';
+            document.getElementById('onboardingModal').classList.remove('hidden');
+        };
+
+        window.openCreateModal = function() {
+            if (!window.state.userName) {
+                showOnboardingModal();
+                return;
+            }
+            document.getElementById('createModal').classList.remove('hidden');
+        };
+
+        window.closeCreateModal = function() {
+            document.getElementById('createModal').classList.add('hidden');
+        };
+
+        window.handleCreatePost = async function(e) {
+            e.preventDefault();
+            const title = document.getElementById('newPostTitle').value.trim();
+            const category = document.getElementById('newPostCategory').value;
+            const summary = document.getElementById('newPostSummary').value.trim();
+            const content = document.getElementById('newPostContent').value.trim().replace(/\n/g, '<br>');
+
+            const newArticle = {
+                title,
+                category,
+                summary,
+                content,
+                author: window.state.userName || 'Pelajar EduMind',
+                date: 'Hari ini',
+                readTime: '3 min bacaan',
+                likes: 1,
+                quiz: {
+                    question: `Apakah konsep utama dalam nota '${title}'?`,
+                    options: ["Konsep Asas & Aplikasi", "Teori Sahaja", "Latihan Amali", "Tiada"],
+                    correct: 0
+                }
+            };
+
+            if (db) {
+                try {
+                    const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'blog_posts');
+                    await addDoc(colRef, {
+                        ...newArticle,
+                        createdAt: new Date().toISOString()
+                    });
+                } catch (err) {
+                    console.error("Error creating post in Firestore:", err);
+                }
+            } else {
+                newArticle.id = 'custom_' + Date.now();
+                window.state.articles.unshift(newArticle);
+                renderArticles();
+            }
+
+            // Award XP
+            window.state.xp += 30;
+            saveUserProfileToDb(window.state.userName);
+
+            closeCreateModal();
+            showToast('Nota anda berjaya diterbitkan! +30 XP 🌟');
+            
+            // Reset form
+            document.getElementById('newPostTitle').value = '';
+            document.getElementById('newPostSummary').value = '';
+            document.getElementById('newPostContent').value = '';
+        };
+
+        window.openReadModal = function(id) {
+            const article = window.state.articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('readCategoryBadge').innerText = article.category;
+            document.getElementById('readTitle').innerText = article.title;
+            document.getElementById('readMeta').innerText = `Oleh ${article.author} • ${article.date} • ${article.readTime}`;
+            document.getElementById('readBody').innerHTML = article.content;
+
+            // Setup Quiz
+            const quiz = article.quiz || {
+                question: "Adakah anda telah memahami isi kandungan nota ini?",
+                options: ["Ya, faham sepenuhnya!", "Perlu ulang baca"],
+                correct: 0
+            };
+
+            document.getElementById('articleQuizQuestion').innerText = quiz.question;
+            const optionsContainer = document.getElementById('articleQuizOptions');
+            optionsContainer.innerHTML = '';
+            document.getElementById('articleQuizFeedback').className = "mt-3 text-xs font-semibold hidden";
+
+            quiz.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-blue-500 text-xs font-medium transition";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    const feedback = document.getElementById('articleQuizFeedback');
+                    feedback.classList.remove('hidden');
+                    if (idx === quiz.correct) {
+                        feedback.innerText = "✅ Tahniah! Jawapan anda tepat (+20 XP)";
+                        feedback.className = "mt-3 text-xs font-bold text-green-600 dark:text-green-400";
+                        window.state.xp += 20;
+                        saveUserProfileToDb(window.state.userName);
+                    } else {
+                        feedback.innerText = "❌ Kurang tepat, cuba semak semula artikel di atas.";
+                        feedback.className = "mt-3 text-xs font-bold text-rose-500";
+                    }
+                };
+                optionsContainer.appendChild(btn);
+            });
+
+            // Increment read count
+            window.state.readCount += 1;
+            saveUserProfileToDb(window.state.userName);
+
+            document.getElementById('readModal').classList.remove('hidden');
+        };
+
+        window.closeReadModal = function() {
+            document.getElementById('readModal').classList.add('hidden');
+        };
+
+        window.toggleBookmark = function(id, e) {
+            e.stopPropagation();
+            const idx = window.state.savedPostIds.indexOf(id);
+            if (idx > -1) {
+                window.state.savedPostIds.splice(idx, 1);
+                showToast('Nota dikeluarkan dari simpanan');
+            } else {
+                window.state.savedPostIds.push(id);
+                showToast('Nota berjaya disimpan ke profil!');
+            }
+            saveUserProfileToDb(window.state.userName);
+            renderArticles();
+        };
+
+        window.toggleLike = function(id, e) {
+            e.stopPropagation();
+            const idx = window.state.likedPostIds.indexOf(id);
+            const article = window.state.articles.find(a => a.id === id);
+            if (!article) return;
+
+            if (idx > -1) {
+                window.state.likedPostIds.splice(idx, 1);
+                article.likes = Math.max(0, (article.likes || 1) - 1);
+            } else {
+                window.state.likedPostIds.push(id);
+                article.likes = (article.likes || 0) + 1;
+            }
+            saveUserProfileToDb(window.state.userName);
+            renderArticles();
+        };
+
+        window.setCategory = function(cat) {
+            window.state.activeCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = "category-btn active px-4 py-2 rounded-xl whitespace-nowrap transition bg-blue-600 text-white shadow-sm";
+                } else {
+                    btn.className = "category-btn px-4 py-2 rounded-xl whitespace-nowrap transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400";
+                }
+            });
+            renderArticles();
+        };
+
+        window.filterPosts = function() {
+            window.state.searchQuery = document.getElementById('searchInput').value;
+            renderArticles();
+        };
+
+        window.syncMobileSearch = function(val) {
+            window.state.searchQuery = val;
+            renderArticles();
+        };
+
+        window.checkMiniQuiz = function(btn, isCorrect) {
+            const res = document.getElementById('miniQuizResult');
+            res.classList.remove('hidden');
+            if (isCorrect) {
+                res.className = "mt-3 p-2.5 rounded-xl text-xs font-bold bg-green-500/20 text-green-200 border border-green-500/30";
+                res.innerText = "🎉 Tepat sekali! Paru-paru ialah organ utama pernafasan (+15 XP)";
+                window.state.xp += 15;
+                saveUserProfileToDb(window.state.userName);
+            } else {
+                res.className = "mt-3 p-2.5 rounded-xl text-xs font-bold bg-rose-500/20 text-rose-200 border border-rose-500/30";
+                res.innerText = "❌ Jawapan kurang tepat. Jawapan sebenar: Paru-paru.";
+            }
+        };
+
+        window.toggleDarkMode = function() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-sun text-yellow-400 text-sm' : 'fa-solid fa-moon text-sm';
+        };
+
+        window.clearUserData = function() {
+            window.state.userName = '';
+            window.state.xp = 0;
+            window.state.savedPostIds = [];
+            window.state.likedPostIds = [];
+            showOnboardingModal();
+            showToast('Data pengguna telah dikosongkan.');
+        };
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initial execution on load
         window.onload = function() {
-            renderGateCards();
-            renderCircuitVisualizer();
-            updateUIHeader();
-            updateExerciseBadges();
+            renderArticles();
+            if (window.state.userName) {
+                updateUserUI();
+            } else {
+                checkLocalOrPromptName();
+            }
         };
     </script>
 </body>
